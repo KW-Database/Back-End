@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class liked_item {
+public class LikedItem {
     private String iCode;
     private String ID;
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class posts {
+public class Posts {
     private int post_id;
     private String ID;
     private String title;
