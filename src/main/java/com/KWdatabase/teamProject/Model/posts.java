@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class posts {
-    private int post_id;
+    private int postId;
     private String ID;
     private String title;
     private String contents;
-    private LocalDateTime post_time;
-    private int hit_count;
+    private LocalDateTime postTime;
+    private int hitCount;
 }

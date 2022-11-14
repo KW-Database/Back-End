@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class shareholder {
-    private String iCode;
+    private String itemCode;
     private String majorHolders;
-    private int nItem;
+    private int numItem;
     private double shares;
 }

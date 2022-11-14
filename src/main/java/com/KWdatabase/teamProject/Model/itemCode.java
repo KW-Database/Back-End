@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class itemcode {
-    private String iCode;
-    private String iName;
+public class itemCode {
+    private String itemCode;
+    private String itemName;
     private int likeNum;
 }

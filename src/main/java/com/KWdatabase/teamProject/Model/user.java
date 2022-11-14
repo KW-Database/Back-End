@@ -11,7 +11,7 @@ public class user {
     private String username;
     private int age;
     private String email;
-    private String pNum;
+    private String phoneNumber;
     private char sex;
     private int admin;
 }
