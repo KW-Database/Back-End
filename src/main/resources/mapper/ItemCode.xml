@@ -6,7 +6,7 @@
     </select>
 
     <insert id="insertItemCode">
-        INSERT INTO item_code(item_code,item_name,like_number)
+        INSERT ignore INTO item_code(item_code,item_name,like_number)
         VALUES (#{item.itemCode},#{item.itemName},#{item.likeNumber})
     </insert>
 
