@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Holdings {
-    private String iCode;
-    private String ID;
-    private int nItem;
-    private float bid_price;
+    private String itemCode;
+    private String id;
+    private int itemNumber;
+    private float bidPrice;
 }

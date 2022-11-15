@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ItemCondition {
-    private String iCode;
-    private LocalDateTime pDate;
-    private float sPrice;
-    private float ePrice;
-    private float hPrice;
-    private float lPrice;
+    private String itemCode;
+    private LocalDateTime purchaseDate;
+    private float startPrice;
+    private float endPrice;
+    private float highestPrice;
+    private float lowestPrice;
     private int volume;
 }

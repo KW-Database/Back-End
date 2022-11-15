@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Chat {
-    private String iCode;
-    private String ID;
+    private String item_code;
+    private String id;
     private String contents;
     private LocalDateTime post_time;
 }

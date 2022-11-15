@@ -22,13 +22,13 @@ class ItemCodeDaoTest {
         String item_name = "samsung";
         int like_number=1;
         ItemCode itemCode = ItemCode.builder()
-                .item_code(item_code)
-                .item_name(item_name)
-                .like_number(like_number)
+                .itemCode(item_code)
+                .itemName(item_name)
+                .likeNumber(like_number)
                 .build();
 
         ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode);
-        assertThat(itemCode1.getItem_code()).isEqualTo(item_code);
+        assertThat(itemCode1.getItemCode()).isEqualTo(item_code);
     }
 
     @Test
@@ -37,15 +37,15 @@ class ItemCodeDaoTest {
         String item_name = "Jiwon";
         int like_number=50;
         ItemCode itemCode = ItemCode.builder()
-                .item_code(item_code)
-                .item_name(item_name)
-                .like_number(like_number)
+                .itemCode(item_code)
+                .itemName(item_name)
+                .likeNumber(like_number)
                 .build();
 
         itemCodeDao.insertItemCode(itemCode);
 
         ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode);
-        assertThat(itemCode1.getItem_code()).isEqualTo(item_code);
+        assertThat(itemCode1.getItemCode()).isEqualTo(item_code);
     }
 
 }

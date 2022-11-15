@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ItemCode {
-    private String item_code;
-    private String item_name;
-    private int like_number;
+    private String itemCode;
+    private String itemName;
+    private int likeNumber;
 }

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LikedItem {
-    private String iCode;
-    private String ID;
+    private String itemCode;
+    private String id;
 }

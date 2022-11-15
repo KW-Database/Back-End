@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class Company {
-    private String iCode;
-    private String cName;
-    private int nItem;
-    private String summary;
-    private LocalDateTime public_date;
+    private String itemCode;
+    private String companyName;
+    private int itemNumber;
+    private String companySummary;
+    private LocalDateTime publicDate;
 }
