@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class company {
+public class Company {
     private String iCode;
     private String cName;
     private int nItem;

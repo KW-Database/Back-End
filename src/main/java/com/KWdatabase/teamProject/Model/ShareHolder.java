@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class shareholder {
+public class ShareHolder {
     private String iCode;
     private String majorHolders;
     private int nItem;

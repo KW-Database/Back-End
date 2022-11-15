@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class chat {
+public class Chat {
     private String iCode;
     private String ID;
     private String contents;

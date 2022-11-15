@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class itemCondition {
+public class ItemCondition {
     private String iCode;
     private LocalDateTime pDate;
     private float sPrice;
