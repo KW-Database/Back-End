@@ -57,7 +57,7 @@ public class ItemCodeService {
     }
 
     @NonNull
-    public List<ItemCode> getDataList(Document document){
+    private List<ItemCode> getDataList(Document document){
         List<ItemCode> list = new ArrayList<>();
         Elements selects = document.select(".type_2 tbody tr");
 
