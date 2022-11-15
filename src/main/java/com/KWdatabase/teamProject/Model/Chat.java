@@ -11,5 +11,5 @@ public class Chat {
     private String item_code;
     private String id;
     private String contents;
-    private LocalDateTime post_time;
+    private LocalDateTime postTime;
 }
