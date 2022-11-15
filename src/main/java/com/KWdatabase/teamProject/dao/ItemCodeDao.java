@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ItemCodeDao {
-    ItemCode getItemCode(@Param("item")ItemCode itemCode);
-    void insertItemCode(@Param("item")ItemCode itemCode);
+    public ItemCode getItemCode(@Param("item")ItemCode itemCode);
+    public void insertItemCode(@Param("item")ItemCode itemCode);
 }
