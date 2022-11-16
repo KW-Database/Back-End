@@ -13,4 +13,11 @@ public class UserService {
     public User findUser(String id){
         return userDao.findUser(id);
     }
+
+    public User updateUser(User user){
+        userDao.updateUser(user);
+        return user;
+    }
+
+
 }
