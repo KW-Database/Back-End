@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface UserDao {
     public User findUser(String id);
     public void signUp(@Param("user") User user);
+    public void updateUser(@Param("user") User user);
 }
