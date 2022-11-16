@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CompanyDao {
 
-    Company getCompany(@Param("com") Company company);
+    public Company getCompany(@Param("com") Company company);
     void insertCompany(@Param("com")Company company);
+
+    void updateCompany(@Param("com")Company company);
+
 }

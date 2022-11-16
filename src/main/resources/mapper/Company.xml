@@ -10,4 +10,9 @@
         VALUES (#{com.itemCode},#{com.companyName},#{com.itemNumber}, #{com.companySummary}, #{com.publicDate})
     </insert>
 
+    <update id="updateCompany">
+        update company_info
+        set company_name = #{com.companyName}, item_number = #{com.itemNumber}, company_summary =#{com.companySummary}, public_date = #{com.publicDate}
+        where item_code = #{com.itemCode}
+    </update>
 </mapper>
