@@ -1,4 +1,4 @@
-package com.KWdatabase.teamProject.service;
+package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.User;
 import com.KWdatabase.teamProject.dao.UserDao;
@@ -17,6 +17,11 @@ public class UserService {
     public User updateUser(User user){
         userDao.updateUser(user);
         return user;
+    }
+
+    public Boolean deleteUser(String id){
+        userDao.deleteUser(id);
+        return true;
     }
 
 

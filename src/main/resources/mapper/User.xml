@@ -16,4 +16,8 @@
         WHERE id = #{user.id}
     </update>
 
+    <delete id="deleteUser">
+        DELETE FROM user_info
+        WHERE id = #{id}
+    </delete>
 </mapper>
