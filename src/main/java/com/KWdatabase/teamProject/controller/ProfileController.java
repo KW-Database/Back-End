@@ -1,7 +1,7 @@
 package com.KWdatabase.teamProject.controller;
 
 import com.KWdatabase.teamProject.Model.User;
-import com.KWdatabase.teamProject.service.UserService;
+import com.KWdatabase.teamProject.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
