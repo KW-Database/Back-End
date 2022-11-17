@@ -19,5 +19,10 @@ public class UserService {
         return user;
     }
 
+    public Boolean deleteUser(String id){
+        userDao.deleteUser(id);
+        return true;
+    }
+
 
 }

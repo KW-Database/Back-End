@@ -24,4 +24,10 @@ public class ProfileController {
         userService.updateUser(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestParam(name="id")String id){
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }
