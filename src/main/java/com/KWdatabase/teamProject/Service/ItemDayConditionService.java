@@ -21,8 +21,6 @@ public class ItemDayConditionService {
     @Autowired
     public ItemDayConditionDao itemDayConditionDao;
 
-    private final String timeCondition =
-            "https://finance.naver.com/item/sise_time.naver?code=";// 예시 : https://finance.naver.com/item/sise_time.naver?code=001800&thistime=20221116161103
     private final String dayCondition =
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
 
