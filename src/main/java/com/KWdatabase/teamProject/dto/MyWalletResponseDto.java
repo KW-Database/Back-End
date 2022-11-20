@@ -2,14 +2,19 @@ package com.KWdatabase.teamProject.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyWalletResponseDto {
-    private int totalHoldings;//총 보유금액
-    private int totalAppraisal;//총 평가 금액
-    private int totalPurchase;//총 매수금액
-    private int cash;//보유 현금
+    private long totalHoldings;//총 보유금액
+    private long totalAppraisal;//총 평가 금액
+    private long totalPurchase;//총 매수금액
+    private float totalRate;//총 수익률
+    private long cash;//보유 현금
+    private List<RatePerCompany> RatePerCompany;
 }

@@ -16,7 +16,7 @@ class ItemTimeConditionServiceTest {
 
     @Test
     public void insertDataTest() throws Exception{
-        String itemcode = "001800";
+        String itemcode = "108320";
         itemTimeConditionService.pageCrawling(itemcode);
     }
 }

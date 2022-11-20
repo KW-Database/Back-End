@@ -29,21 +29,21 @@ public class ItemTimeConditionService {
         int pageNum =1;
         while(true){
             String num = Integer.toString(pageNum);
-            String URL = timeCondition + itemCode+"&page="+num;
+            String URL = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
                         num = Integer.toString(pageNum);
-                        String url = timeCondition + itemCode+"&page="+num;
+                        String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
                         timeCrawling(url, itemCode);
                     }
                     break;
                 }
                 for(; pageNum<= 10 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num;
+                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
                     timeCrawling(url, itemCode);
                 }
             }
@@ -51,7 +51,7 @@ public class ItemTimeConditionService {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+pages.size()-2 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num;
+                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
                     timeCrawling(url, itemCode);
                 }
                 break;
@@ -60,7 +60,7 @@ public class ItemTimeConditionService {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+ 9 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num;
+                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
                     timeCrawling(url, itemCode);
                 }
             }
