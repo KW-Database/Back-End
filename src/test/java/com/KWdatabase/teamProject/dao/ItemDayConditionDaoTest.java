@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,8 +41,7 @@ class ItemDayConditionDaoTest {
                 .volume(vol)
                 .build();
 
-        ItemDayCondition itemDayCondition1 = itemConditionDao.getItemDayCondition(itemDayCondition);
-        assertThat(itemDayCondition1.getItemCode()).isEqualTo(item_code);
+        assertThat(itemDayCondition.getItemCode()).isEqualTo(item_code);
     }
 
     @Test
@@ -67,8 +67,8 @@ class ItemDayConditionDaoTest {
 
         itemConditionDao.insertItemDayCondition(itemDayCondition);
 
-        ItemDayCondition itemDayCondition1 = itemConditionDao.getItemDayCondition(itemDayCondition);
-        assertThat(itemDayCondition1.getItemCode()).isEqualTo(item_code);
+        List<ItemDayCondition> itemDayCondition1 = itemConditionDao.getItemDayCondition(item_code);
+        assertThat(itemDayCondition1.get(0).getItemCode()).isEqualTo(item_code);
     }
 
 }
