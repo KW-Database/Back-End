@@ -13,4 +13,5 @@
     <delete id="deleteAllTimeSise">
         delete from item_time_condition where true;
     </delete>
+
 </mapper>

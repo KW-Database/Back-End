@@ -1,6 +1,5 @@
 package com.KWdatabase.teamProject.Service;
 
-import com.KWdatabase.teamProject.Model.ItemDayCondition;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import org.jsoup.Jsoup;
