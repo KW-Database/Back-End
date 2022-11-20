@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class RatePerCompany {
     private String itemCode;
+    private String itemName;
     private long purchase;
     private long appraisal;
     private float totalRate;

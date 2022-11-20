@@ -3,6 +3,7 @@ package com.KWdatabase.teamProject.Service;
 import com.KWdatabase.teamProject.Model.Holdings;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 import com.KWdatabase.teamProject.dao.HoldingsDao;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import com.KWdatabase.teamProject.dao.UserDao;
 import com.KWdatabase.teamProject.dto.MyWalletResponseDto;
@@ -19,6 +20,7 @@ public class MyWalletService {
     private final HoldingsDao holdingsDao;
     private final ItemTimeConditionDao itemTimeConditionDao;
     private final UserDao userDao;
+    private final ItemCodeDao itemCodeDao;
 
     public MyWalletResponseDto getMyWallet(String id){
         List<Holdings> holdings = holdingsDao.getHoldings(id);
@@ -30,6 +32,7 @@ public class MyWalletService {
         List<RatePerCompany> list = new ArrayList<RatePerCompany>();
         for(Holdings h: holdings){
             String itemCode = h.getItemCode();
+            String itemName = itemCodeDao.getItemCode(itemCode).getItemName();
             ItemTimeCondition itemTimeCondition = itemTimeConditionDao.getNewCondition(itemCode);
             long purchase = (long) (h.getAvgPrice() * h.getItemNumber());
             long appraisal = (long) (itemTimeCondition.getExecutionPrice() * h.getItemNumber());
@@ -37,6 +40,7 @@ public class MyWalletService {
             RatePerCompany ratePerCompany = RatePerCompany.builder()
                     .totalRate(rate)
                     .itemCode(itemCode)
+                    .itemName(itemName)
                     .appraisal(appraisal)
                     .purchase(purchase)
                     .build();
