@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.KWdatabase.teamProject.dao.ItemCodeDao">
     <select id="getItemCode" resultType="com.KWdatabase.teamProject.Model.ItemCode">
-        SELECT * FROM item_code WHERE item_code = #{item.itemCode}
+        SELECT * FROM item_code WHERE item_code = #{itemCode}
     </select>
 
     <insert id="insertItemCode">
