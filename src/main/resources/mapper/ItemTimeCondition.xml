@@ -5,8 +5,12 @@
         SELECT * FROM item_time_condition WHERE item_code = #{condition.itemCode} and present = #{condition.present}
     </select>
 
+    <select id="getNewCondition" resultType="com.KWdatabase.teamProject.Model.ItemTimeCondition">
+        SELECT * FROM item_time_condition WHERE item_code = #{itemCode} ORDER BY closing_time DESC LIMIT 1
+    </select>
+
     <insert id="insertItemTimeCondition">
-        INSERT INTO item_time_condition(item_code,closing_time, execution_price,volume)
+        INSERT ignore INTO item_time_condition(item_code,closing_time, execution_price,volume)
         VALUES (#{condition.itemCode},#{condition.closingTime},#{condition.executionPrice},#{condition.volume})
     </insert>
 
