@@ -13,4 +13,5 @@ public class RatePerCompany {
     private long purchase;
     private long appraisal;
     private float totalRate;
+    private int itemNumber;
 }

@@ -33,9 +33,10 @@ public class MyWalletService {
         for(Holdings h: holdings){
             String itemCode = h.getItemCode();
             String itemName = itemCodeDao.getItemCode(itemCode).getItemName();
+            int itemNumber=h.getItemNumber();
             ItemTimeCondition itemTimeCondition = itemTimeConditionDao.getNewCondition(itemCode);
-            long purchase = (long) (h.getAvgPrice() * h.getItemNumber());
-            long appraisal = (long) (itemTimeCondition.getExecutionPrice() * h.getItemNumber());
+            long purchase = (long) (h.getAvgPrice() * itemNumber);
+            long appraisal = (long) (itemTimeCondition.getExecutionPrice() * itemNumber);
             float rate = (appraisal - purchase)/ (float)purchase * 100;
             RatePerCompany ratePerCompany = RatePerCompany.builder()
                     .totalRate(rate)
@@ -43,6 +44,7 @@ public class MyWalletService {
                     .itemName(itemName)
                     .appraisal(appraisal)
                     .purchase(purchase)
+                    .itemNumber(itemNumber)
                     .build();
 
             list.add(ratePerCompany);
