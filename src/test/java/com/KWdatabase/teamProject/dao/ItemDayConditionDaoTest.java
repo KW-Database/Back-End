@@ -21,7 +21,7 @@ class ItemDayConditionDaoTest {
 
     @Test
     public void getDataTest(){
-        String item_code = "000060";
+        String item_code = "102370";
         String string = "2022-11-16 12:26:50";
         LocalDate time = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
         float start_price = (float) 5.3;
