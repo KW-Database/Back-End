@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface ItemDayConditionDao {
     public ItemDayCondition getItemDayCondition(@Param("condition") ItemDayCondition itemDayCondition);
     public void insertItemDayCondition(@Param("condition") ItemDayCondition itemDayCondition);
+    public ItemDayCondition getLatestCondition (String itemId);
 }
