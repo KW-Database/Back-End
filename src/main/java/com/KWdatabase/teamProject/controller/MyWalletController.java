@@ -17,6 +17,6 @@ public class MyWalletController {
     @GetMapping("/myWallet")
     public ResponseEntity<MyWalletResponseDto> myWallet(@RequestParam("id") String id){
         MyWalletResponseDto myWalletResponseDto = myWalletService.getMyWallet(id);
-        return ResponseEntity.ok(myWalletResponseDto);
+        return ResponseEntity.ok().body(myWalletResponseDto);
     }
 }
