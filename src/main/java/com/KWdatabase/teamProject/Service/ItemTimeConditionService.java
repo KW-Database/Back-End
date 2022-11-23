@@ -2,6 +2,7 @@ package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
+import com.KWdatabase.teamProject.dto.ItemInfoResponseDto;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
