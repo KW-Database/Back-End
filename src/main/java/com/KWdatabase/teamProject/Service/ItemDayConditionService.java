@@ -23,6 +23,9 @@ public class ItemDayConditionService {
 
     private final String dayCondition =
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
+    public List<ItemDayCondition> getItemDayCondition(String itemCode){
+        return itemDayConditionDao.getItemDayCondition(itemCode);
+    }
 
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;

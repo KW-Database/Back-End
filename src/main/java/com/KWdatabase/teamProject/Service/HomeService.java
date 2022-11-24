@@ -21,4 +21,8 @@ public class HomeService {
     }
     public List<PublicDateRankDto> getPublicDateList(){return companyDao.getPublicDateList();}
 
+    public List<ItemInfoResponseDto> getUpRank(){return itemTimeConditionDao.getUpRank();}
+
+    public List<ItemInfoResponseDto> getDownRank(){return  itemTimeConditionDao.getDownRank();}
+
 }

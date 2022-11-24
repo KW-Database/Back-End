@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,34 +27,45 @@ public class ItemTimeConditionService {
     @Autowired
     ItemTimeConditionDao itemTimeConditionDao;
 
+    public List<ItemTimeCondition> getItemTimeCondition(String itemCode){
+        return itemTimeConditionDao.getItemTimeCondition(itemCode);
+    }
+
+    public void deleteAllData(){
+        itemTimeConditionDao.deleteAllTimeSise();
+    }
+
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        System.out.println(now);
         while(true){
             String num = Integer.toString(pageNum);
-            String URL = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
+            String URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
+            System.out.println(pages.size());
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
                         num = Integer.toString(pageNum);
-                        String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
-                        timeCrawling(url, itemCode);
+                        URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
+                        timeCrawling(URL, itemCode);
                     }
                     break;
                 }
                 for(; pageNum<= 10 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
-                    timeCrawling(url, itemCode);
+                    URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
+                    timeCrawling(URL, itemCode);
                 }
             }
             else if(pages.size()<12) {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+pages.size()-2 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
-                    timeCrawling(url, itemCode);
+                    URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
+                    timeCrawling(URL, itemCode);
                 }
                 break;
             }
@@ -61,8 +73,8 @@ public class ItemTimeConditionService {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+ 9 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = timeCondition + itemCode+"&page="+num+"&thistime=20221118161142";
-                    timeCrawling(url, itemCode);
+                    URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
+                    timeCrawling(URL, itemCode);
                 }
             }
         }
@@ -74,6 +86,7 @@ public class ItemTimeConditionService {
         List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
 
         for(ItemTimeCondition timeCondition : itemTimeConditionList){
+            System.out.println(timeCondition.getClosingTime());
             itemTimeConditionDao.insertItemTimeCondition(timeCondition);
         }
     }
