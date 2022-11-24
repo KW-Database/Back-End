@@ -4,6 +4,22 @@
     <select id="getCompany" resultType="com.KWdatabase.teamProject.Model.Company">
         SELECT * FROM company_info WHERE item_code = #{com.itemCode}
     </select>
+    
+    <select id="getPublicDateList" resultType="com.KWdatabase.teamProject.dto.PublicDateRankDto">
+        select i.item_name, t.execution_price , t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate, c.public_date
+        from item_time_condition as t, item_code as i, item_day_condition as d, company_info as c
+        where t.item_code = i.item_code and i.item_code = d.item_code  and d.item_code = c.item_code
+          and c.public_date between DATE_ADD(NOW(),INTERVAL -1 MONTH) and NOW()
+          and (t.item_code, t.closing_time) in (
+            select item_code, max(closing_time)
+            from item_time_condition
+            group by item_code)
+          and ( d.item_code, d.present) in (
+            select item_code, max(present)
+            from item_day_condition
+            group by item_code)
+        order by change_rate desc LIMIT 10
+    </select>
 
     <insert id="insertCompany">
         INSERT ignore INTO company_info(item_code,company_name,item_number,company_summary, public_date)
@@ -15,4 +31,5 @@
         set company_name = #{com.companyName}, item_number = #{com.itemNumber}, company_summary =#{com.companySummary}, public_date = #{com.publicDate}
         where item_code = #{com.itemCode}
     </update>
+    
 </mapper>

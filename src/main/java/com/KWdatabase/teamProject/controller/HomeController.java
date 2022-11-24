@@ -17,6 +17,7 @@ public class HomeController {
 
     private final HomeService homeService;
 
+
     //Test Method
     @GetMapping("/test/rank")
     public ResponseEntity<Map<String,Object>> rankTest(){
