@@ -3,7 +3,9 @@ package com.KWdatabase.teamProject.Service;
 import com.KWdatabase.teamProject.Model.Company;
 import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.dao.CompanyDao;
+import com.KWdatabase.teamProject.dto.PublicDateRankDto;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyService {
 
     @Autowired
@@ -35,6 +38,7 @@ public class CompanyService {
             "https://navercomp.wisereport.co.kr/v2/company/c1010001.aspx?cmp_cd=";
     private static final String stockInfoUrl_page2 =
             "https://navercomp.wisereport.co.kr/v2/company/c1020001.aspx?cmp_cd=";
+
 
     public void process(String itemCode) throws IOException {
         String URL = stockUrl+itemCode;
