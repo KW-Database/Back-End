@@ -2,6 +2,7 @@ package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.ItemDayCondition;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,9 +29,8 @@ class ItemTimeConditionServiceTest {
         }
     }
 
-    @Test
     public void insertDataTest() throws Exception{
-        String itemcode = "001800";
+        String itemcode = "102370";
         itemTimeConditionService.pageCrawling(itemcode);
     }
 }

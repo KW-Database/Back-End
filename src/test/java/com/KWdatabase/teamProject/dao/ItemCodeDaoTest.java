@@ -27,7 +27,7 @@ class ItemCodeDaoTest {
                 .likeNumber(like_number)
                 .build();
 
-        ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode);
+        ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode.getItemCode());
         assertThat(itemCode1.getItemCode()).isEqualTo(item_code);
     }
 
@@ -44,7 +44,7 @@ class ItemCodeDaoTest {
 
         itemCodeDao.insertItemCode(itemCode);
 
-        ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode);
+        ItemCode itemCode1 = itemCodeDao.getItemCode(itemCode.getItemCode());
         assertThat(itemCode1.getItemCode()).isEqualTo(item_code);
     }
 

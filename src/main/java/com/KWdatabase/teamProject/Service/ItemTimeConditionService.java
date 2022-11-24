@@ -1,6 +1,5 @@
 package com.KWdatabase.teamProject.Service;
 
-import com.KWdatabase.teamProject.Model.ItemDayCondition;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import org.jsoup.Jsoup;
@@ -8,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,6 +35,7 @@ public class ItemTimeConditionService {
         itemTimeConditionDao.deleteAllTimeSise();
     }
 
+    @Scheduled(cron = "0 * * * * *")
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
