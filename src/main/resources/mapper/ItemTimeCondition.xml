@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.KWdatabase.teamProject.dao.ItemTimeConditionDao">
+    <select id="getItemTimeCondition" resultType="com.KWdatabase.teamProject.Model.ItemTimeCondition">
+        SELECT * FROM item_time_condition WHERE item_code = #{condition.itemCode}
+    </select>
+
+    <select id="getNewCondition" resultType="com.KWdatabase.teamProject.Model.ItemTimeCondition">
+        SELECT * FROM item_time_condition WHERE item_code = #{itemCode} ORDER BY closing_time DESC LIMIT 1
+    </select>
+
+
+    <select id="getVolumeRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+        select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        from item_time_condition as t, item_code as c, item_day_condition as d
+        where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
+            select item_code, max(closing_time)
+            from item_time_condition
+            group by item_code)
+          and ( d.item_code, d.present) in (
+            select item_code, max(present)
+            from item_day_condition
+            group by item_code)
+        order by t.volume desc LIMIT 10
+    </select>
+
+    <select id="getUpRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+        select c.item_name, t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        from item_time_condition as t, item_code as c, item_day_condition as d
+        where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
+            select item_code, max(closing_time)
+            from item_time_condition
+            group by item_code)
+          and ( d.item_code, d.present) in (
+            select item_code, max(present)
+            from item_day_condition
+            group by item_code)
+        order by change_rate desc LIMIT 10
+    </select>
+
+    <select id="getDownRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+        select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        from item_time_condition as t, item_code as c, item_day_condition as d
+        where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
+            select item_code, max(closing_time)
+            from item_time_condition
+            group by item_code)
+          and ( d.item_code, d.present) in (
+            select item_code, max(present)
+            from item_day_condition
+            group by item_code)
+        order by t.volume LIMIT 10
+    </select>
+
+
+
+    <insert id="insertItemTimeCondition">
+        INSERT INTO item_time_condition(item_code,closing_time, execution_price,volume)
+        VALUES (#{condition.itemCode},#{condition.closingTime},#{condition.executionPrice},#{condition.volume})
+    </insert>
+
+    <delete id="deleteAllTimeSise">
+        delete from item_time_condition where true;
+    </delete>
+
+</mapper>
