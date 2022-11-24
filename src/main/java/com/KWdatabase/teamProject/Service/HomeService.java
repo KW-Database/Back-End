@@ -17,4 +17,8 @@ public class HomeService {
         return itemTimeConditionDao.getVolumeRank();
     }
 
+    public List<ItemInfoResponseDto> getUpRank(){return itemTimeConditionDao.getUpRank();}
+
+    public List<ItemInfoResponseDto> getDownRank(){return  itemTimeConditionDao.getDownRank();}
+
 }
