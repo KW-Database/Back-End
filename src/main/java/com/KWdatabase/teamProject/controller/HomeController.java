@@ -1,7 +1,7 @@
 package com.KWdatabase.teamProject.controller;
 
 import com.KWdatabase.teamProject.Service.HomeService;
-import com.KWdatabase.teamProject.dto.ItemInfoResponseDto;
+import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

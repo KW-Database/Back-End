@@ -1,7 +1,7 @@
 package com.KWdatabase.teamProject.controller;
 
 import com.KWdatabase.teamProject.Service.MyWalletService;
-import com.KWdatabase.teamProject.dto.MyWalletResponseDto;
+import com.KWdatabase.teamProject.Model.MyWalletResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

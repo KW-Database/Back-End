@@ -9,6 +9,7 @@
         SELECT * FROM item_time_condition WHERE item_code = #{itemCode} ORDER BY closing_time DESC LIMIT 1
     </select>
 
+
     <select id="getVolumeRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
         select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
@@ -54,7 +55,7 @@
 
 
     <insert id="insertItemTimeCondition">
-        INSERT ignore INTO item_time_condition(item_code,closing_time, execution_price,volume)
+        INSERT INTO item_time_condition(item_code,closing_time, execution_price,volume)
         VALUES (#{condition.itemCode},#{condition.closingTime},#{condition.executionPrice},#{condition.volume})
     </insert>
 

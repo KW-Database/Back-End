@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ItemDayConditionService {
         return itemDayConditionDao.getItemDayCondition(itemCode);
     }
 
+    @Scheduled(cron="0 0 10 * * *")
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
         while(true){

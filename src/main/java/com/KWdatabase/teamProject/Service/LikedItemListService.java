@@ -1,15 +1,13 @@
 package com.KWdatabase.teamProject.Service;
 
-import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.ItemDayCondition;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 import com.KWdatabase.teamProject.dao.ItemDayConditionDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import com.KWdatabase.teamProject.dao.LikedItemDao;
-import com.KWdatabase.teamProject.dto.LikedItemListDto;
-import com.KWdatabase.teamProject.dto.LikedItemsResponseDto;
+import com.KWdatabase.teamProject.Model.LikedItemListDto;
+import com.KWdatabase.teamProject.Model.LikedItemsResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -2,8 +2,9 @@ package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.dao.CompanyDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
-import com.KWdatabase.teamProject.dto.ItemInfoResponseDto;
-import com.KWdatabase.teamProject.dto.PublicDateRankDto;
+import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
+import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
+import com.KWdatabase.teamProject.Model.PublicDateRankDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

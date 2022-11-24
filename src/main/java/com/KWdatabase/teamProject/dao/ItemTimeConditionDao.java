@@ -1,7 +1,7 @@
 package com.KWdatabase.teamProject.dao;
 
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
-import com.KWdatabase.teamProject.dto.ItemInfoResponseDto;
+import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

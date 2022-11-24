@@ -1,8 +1,7 @@
-package com.KWdatabase.teamProject.dto;
+package com.KWdatabase.teamProject.Model;
 
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

@@ -6,8 +6,8 @@ import com.KWdatabase.teamProject.dao.HoldingsDao;
 import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import com.KWdatabase.teamProject.dao.UserDao;
-import com.KWdatabase.teamProject.dto.MyWalletResponseDto;
-import com.KWdatabase.teamProject.dto.RatePerCompany;
+import com.KWdatabase.teamProject.Model.MyWalletResponseDto;
+import com.KWdatabase.teamProject.Model.RatePerCompany;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

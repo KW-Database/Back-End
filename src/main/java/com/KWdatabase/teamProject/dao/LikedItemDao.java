@@ -1,6 +1,6 @@
 package com.KWdatabase.teamProject.dao;
 
-import com.KWdatabase.teamProject.dto.LikedItemListDto;
+import com.KWdatabase.teamProject.Model.LikedItemListDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
