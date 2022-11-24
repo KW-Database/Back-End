@@ -10,4 +10,5 @@ public class ItemInfoResponseDto {
     private int volume;
     private float changeAmount;
     private float changeRate;
+    private float executionPrice;
 }
