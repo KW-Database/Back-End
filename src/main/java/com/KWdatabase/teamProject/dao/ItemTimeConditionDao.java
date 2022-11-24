@@ -13,4 +13,6 @@ public interface ItemTimeConditionDao {
     public void insertItemTimeCondition(@Param("condition") ItemTimeCondition itemTimeCondition);
     public ItemTimeCondition getNewCondition(String itemCode);
     public List<ItemInfoResponseDto>getVolumeRank();
+    public List<ItemInfoResponseDto>getUpRank();
+    public List<ItemInfoResponseDto>getDownRank();
 }
