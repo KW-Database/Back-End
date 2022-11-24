@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.KWdatabase.teamProject.dao.ItemTimeConditionDao">
     <select id="getItemTimeCondition" resultType="com.KWdatabase.teamProject.Model.ItemTimeCondition">
-        SELECT * FROM item_time_condition WHERE item_code = #{condition.itemCode} and present = #{condition.present}
+        SELECT * FROM item_time_condition WHERE item_code = #{condition.itemCode}
     </select>
 
     <select id="getNewCondition" resultType="com.KWdatabase.teamProject.Model.ItemTimeCondition">
@@ -27,5 +27,9 @@
         INSERT ignore INTO item_time_condition(item_code,closing_time, execution_price,volume)
         VALUES (#{condition.itemCode},#{condition.closingTime},#{condition.executionPrice},#{condition.volume})
     </insert>
+
+    <delete id="deleteAllTimeSise">
+        delete from item_time_condition where true;
+    </delete>
 
 </mapper>
