@@ -5,6 +5,10 @@
         SELECT * FROM item_day_condition WHERE item_code = #{condition.itemCode}
     </select>
 
+    <select id="getLatestCondition" resultType="com.KWdatabase.teamProject.Model.ItemDayCondition">
+        SELECT * FROM item_day_condition WHERE item_code = #{itemCode} ORDER BY present DESC LIMIT 1
+    </select>
+
     <insert id="insertItemDayCondition">
         INSERT ignore INTO item_day_condition(item_code,present,start_price, end_price, highest_price, lowest_price, volume)
         VALUES (#{condition.itemCode},#{condition.present},#{condition.startPrice},#{condition.endPrice},#{condition.highestPrice},#{condition.lowestPrice},#{condition.volume})

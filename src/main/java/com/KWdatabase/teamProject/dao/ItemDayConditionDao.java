@@ -10,4 +10,5 @@ import java.util.List;
 public interface ItemDayConditionDao {
     public List<ItemDayCondition> getItemDayCondition(String itemCode);
     public void insertItemDayCondition(@Param("condition") ItemDayCondition itemDayCondition);
+    public ItemDayCondition getLatestCondition (String itemId);
 }
