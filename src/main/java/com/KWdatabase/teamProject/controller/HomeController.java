@@ -15,10 +15,12 @@ public class HomeController {
 
     private final HomeService homeService;
 
+
     //Test Method
     @GetMapping("/test/rank")
     public ResponseEntity<List<ItemInfoResponseDto>> rankTest(){
         List<ItemInfoResponseDto> list = homeService.getVolumeRank();
+        
         return ResponseEntity.ok().body(list);
     }
 }
