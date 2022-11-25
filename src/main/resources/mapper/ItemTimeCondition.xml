@@ -10,7 +10,7 @@
     </select>
 
 
-    <select id="getVolumeRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+    <select id="getVolumeRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
         select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
@@ -24,7 +24,7 @@
         order by t.volume desc LIMIT 10
     </select>
 
-    <select id="getUpRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+    <select id="getUpRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
         select c.item_name, t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
@@ -38,7 +38,7 @@
         order by change_rate desc LIMIT 10
     </select>
 
-    <select id="getDownRank" resultType="com.KWdatabase.teamProject.dto.ItemInfoResponseDto">
+    <select id="getDownRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
         select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
@@ -55,7 +55,7 @@
 
 
     <insert id="insertItemTimeCondition">
-        INSERT INTO item_time_condition(item_code,closing_time, execution_price,volume)
+        INSERT ignore INTO item_time_condition(item_code,closing_time, execution_price,volume)
         VALUES (#{condition.itemCode},#{condition.closingTime},#{condition.executionPrice},#{condition.volume})
     </insert>
 

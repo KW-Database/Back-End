@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.KWdatabase.teamProject.dao.PostsDao">
+    <select id="getPost" resultType="com.KWdatabase.teamProject.Model.Posts">
+        SELECT * FROM posts WHERE post_Id = #{postId}
+    </select>
+
+    <insert id="insertPost">
+        INSERT INTO posts(post_id, id, title, contents, post_time, hit_count)
+        VALUES (#{post.postId}, #{post.id},#{post.title},#{post.contents},#{post.postTime},#{post.hitCount})
+    </insert>
+
+    <update id="updatePost">
+        update posts set title = #{post.title} , contents = #{post.contents} where post_id =#{post.postId} and id =#{post.id}
+    </update>
+
+    <delete id="deletePost">
+        delete from posts where post_Id = #{postId}
+    </delete>
+</mapper>

@@ -1,6 +1,8 @@
 package com.KWdatabase.teamProject.Service;
 
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.ItemDayCondition;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.ItemDayConditionDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,6 +24,8 @@ public class ItemDayConditionService {
     @Autowired
     public ItemDayConditionDao itemDayConditionDao;
 
+    @Autowired
+    private ItemCodeDao itemCodeDao;
     private final String dayCondition =
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
     public List<ItemDayCondition> getItemDayCondition(String itemCode){
@@ -29,6 +33,13 @@ public class ItemDayConditionService {
     }
 
     @Scheduled(cron="0 0 10 * * *")
+    public void process() throws IOException {
+        List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
+        for(ItemCode itemCode : itemCodeList){
+            pageCrawling(itemCode.getItemCode());
+        }
+    }
+
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
         while(true){
