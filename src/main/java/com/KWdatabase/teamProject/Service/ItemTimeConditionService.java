@@ -1,6 +1,8 @@
 package com.KWdatabase.teamProject.Service;
 
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,6 +29,9 @@ public class ItemTimeConditionService {
     @Autowired
     ItemTimeConditionDao itemTimeConditionDao;
 
+    @Autowired
+    ItemCodeDao itemCodeDao;
+
     public List<ItemTimeCondition> getItemTimeCondition(String itemCode){
         return itemTimeConditionDao.getItemTimeCondition(itemCode);
     }
@@ -36,16 +41,20 @@ public class ItemTimeConditionService {
     }
 
     @Scheduled(cron = "0 * * * * *")
+    public void process() throws IOException {
+        List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
+        for(ItemCode itemCode : itemCodeList){
+            pageCrawling(itemCode.getItemCode());
+        }
+    }
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        System.out.println(now);
         while(true){
             String num = Integer.toString(pageNum);
             String URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
-            System.out.println(pages.size());
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
@@ -87,7 +96,7 @@ public class ItemTimeConditionService {
         List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
 
         for(ItemTimeCondition timeCondition : itemTimeConditionList){
-            System.out.println(timeCondition.getClosingTime());
+            //System.out.println(timeCondition.getClosingTime());
             itemTimeConditionDao.insertItemTimeCondition(timeCondition);
         }
     }

@@ -5,6 +5,10 @@
         SELECT * FROM item_code WHERE item_code = #{itemCode}
     </select>
 
+    <select id="getItemCodeList" resultType="com.KWdatabase.teamProject.Model.ItemCode">
+        select * from item_code
+    </select>
+
     <insert id="insertItemCode">
         INSERT ignore INTO item_code(item_code,item_name,like_number)
         VALUES (#{item.itemCode},#{item.itemName},#{item.likeNumber})

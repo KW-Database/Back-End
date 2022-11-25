@@ -1,6 +1,8 @@
 package com.KWdatabase.teamProject.Service;
 
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.ItemDayCondition;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.ItemDayConditionDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,8 +29,18 @@ public class ItemDayConditionService {
     public List<ItemDayCondition> getItemDayCondition(String itemCode){
         return itemDayConditionDao.getItemDayCondition(itemCode);
     }
+    @Autowired
+    ItemCodeDao itemCodeDao;
+
 
     @Scheduled(cron="0 0 10 * * *")
+    public void process() throws IOException {
+        List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
+        for(ItemCode itemCode : itemCodeList){
+            pageCrawling(itemCode.getItemCode());
+        }
+    }
+
     public void pageCrawling(String itemCode) throws IOException {
         int pageNum =1;
         while(true){

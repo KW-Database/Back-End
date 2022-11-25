@@ -1,4 +1,4 @@
-package com.KWdatabase.teamProject.dto;
+package com.KWdatabase.teamProject.Model;
 
 import lombok.Getter;
 import lombok.Setter;

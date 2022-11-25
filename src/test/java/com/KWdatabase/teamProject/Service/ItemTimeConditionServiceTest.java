@@ -1,8 +1,10 @@
 package com.KWdatabase.teamProject.Service;
 
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.ItemDayCondition;
 import com.KWdatabase.teamProject.Model.ItemTimeCondition;
 
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,14 @@ class ItemTimeConditionServiceTest {
         }
     }
 
+    @Autowired
+     private ItemCodeDao itemCodeDao;
+    @Test
     public void insertDataTest() throws Exception{
-        String itemcode = "102370";
-        itemTimeConditionService.pageCrawling(itemcode);
+        List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
+
+        for(ItemCode itemcode : itemCodeList){
+            itemTimeConditionService.pageCrawling(itemcode.getItemCode());
+        }
     }
 }
