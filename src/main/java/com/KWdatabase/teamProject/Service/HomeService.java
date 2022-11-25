@@ -1,5 +1,8 @@
 package com.KWdatabase.teamProject.Service;
 
+import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
+import com.KWdatabase.teamProject.Model.PublicDateRankDto;
+import com.KWdatabase.teamProject.dao.CompanyDao;
 import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import com.KWdatabase.teamProject.Model.ItemInfoResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +15,12 @@ import java.util.List;
 public class HomeService {
 
     private final ItemTimeConditionDao itemTimeConditionDao;
+    private final CompanyDao companyDao;
 
     public List<ItemInfoResponseDto> getVolumeRank(){
         return itemTimeConditionDao.getVolumeRank();
     }
+    public List<PublicDateRankDto> getPublicDateList(){return companyDao.getPublicDateList();}
 
     public List<ItemInfoResponseDto> getUpRank(){return itemTimeConditionDao.getUpRank();}
 

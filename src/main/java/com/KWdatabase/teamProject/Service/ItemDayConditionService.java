@@ -24,13 +24,14 @@ public class ItemDayConditionService {
     @Autowired
     public ItemDayConditionDao itemDayConditionDao;
 
-    @Autowired
-    private ItemCodeDao itemCodeDao;
     private final String dayCondition =
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
     public List<ItemDayCondition> getItemDayCondition(String itemCode){
         return itemDayConditionDao.getItemDayCondition(itemCode);
     }
+    @Autowired
+    ItemCodeDao itemCodeDao;
+
 
     @Scheduled(cron="0 0 10 * * *")
     public void process() throws IOException {
