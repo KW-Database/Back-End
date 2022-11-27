@@ -16,4 +16,14 @@ public class Posts {
     private String contents;
     private LocalDateTime postTime;
     private int hitCount;
+
+    public Posts(){}
+    public Posts(int postId, String id,String title,String contents,LocalDateTime postTime,int hitCount){
+        this.postId=postId;
+        this.id=id;
+        this.title= title;
+        this.contents= contents;
+        this.postTime=postTime;
+        this.hitCount=hitCount;
+    }
 }

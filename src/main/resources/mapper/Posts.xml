@@ -5,6 +5,10 @@
         SELECT * FROM posts WHERE post_Id = #{postId}
     </select>
 
+    <select id="getPostsList" resultType="com.KWdatabase.teamProject.Model.Posts">
+        select * from posts;
+    </select>
+
     <insert id="insertPost">
         INSERT INTO posts(post_id, id, title, contents, post_time, hit_count)
         VALUES (#{post.postId}, #{post.id},#{post.title},#{post.contents},#{post.postTime},#{post.hitCount})
