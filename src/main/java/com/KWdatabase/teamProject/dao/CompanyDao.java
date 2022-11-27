@@ -2,7 +2,6 @@ package com.KWdatabase.teamProject.dao;
 
 import com.KWdatabase.teamProject.Model.Company;
 import com.KWdatabase.teamProject.Model.PublicDateRankDto;
-import com.KWdatabase.teamProject.Model.PublicDateRankDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

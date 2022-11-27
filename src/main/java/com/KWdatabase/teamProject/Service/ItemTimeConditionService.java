@@ -40,7 +40,7 @@ public class ItemTimeConditionService {
         itemTimeConditionDao.deleteAllTimeSise();
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    //@Scheduled(cron = "0 * * * * *")
     public void process() throws IOException {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){

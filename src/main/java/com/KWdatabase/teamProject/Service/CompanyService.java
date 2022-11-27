@@ -1,9 +1,7 @@
 package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.Company;
-import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.dao.CompanyDao;
-import com.KWdatabase.teamProject.dto.PublicDateRankDto;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
@@ -14,14 +12,9 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
-import javax.swing.text.DateFormatter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 @Service

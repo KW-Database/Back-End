@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,11 +22,19 @@ class PostsDaoTest {
 
 
     @Test
+    public void getDataList(){
+        List<Posts> postsList =postsDao.getPostsList();
+        for(Posts posts : postsList){
+            System.out.println(posts.getId());
+        }
+    }
+
+    @Test
     public void insertDataTest(){
-        int postId= 1;
-        String id ="KIKI";
-        String title = "Test";
-        String contents = "Test Contents";
+        int postId= 2;
+        String id ="KIKI2";
+        String title = "Test2";
+        String contents = "Test Contents2";
         LocalDateTime postTime =LocalDateTime.now();
         int hitCount = 0;
 
