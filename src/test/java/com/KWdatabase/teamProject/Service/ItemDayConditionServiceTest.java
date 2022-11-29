@@ -28,7 +28,6 @@ class ItemDayConditionServiceTest {
 
     @Test
     public void insertDataTest() throws Exception{
-        String itemcode = "001800";
-        itemDayConditionService.pageCrawling(itemcode);
+        itemDayConditionService.process();
     }
 }

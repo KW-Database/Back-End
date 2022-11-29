@@ -35,10 +35,8 @@ class ItemTimeConditionServiceTest {
      private ItemCodeDao itemCodeDao;
     @Test
     public void insertDataTest() throws Exception{
-        List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
-
-        for(ItemCode itemcode : itemCodeList){
-            itemTimeConditionService.pageCrawling(itemcode.getItemCode());
-        }
+        itemTimeConditionService.process();
     }
+
+
 }
