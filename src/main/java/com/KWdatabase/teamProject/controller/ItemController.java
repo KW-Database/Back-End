@@ -37,13 +37,4 @@ public class ItemController {
         itemTimeConditionService.deleteAllData();
     }
 
-    @GetMapping("/{id}/updateTime")
-    public void updateTimeSise(@PathVariable String id) throws IOException {
-        itemTimeConditionService.pageCrawling(id);
-    }
-
-    @GetMapping("/{id}/updateDay")
-    public void updateDaySise(@PathVariable String id) throws IOException {
-        itemDayConditionService.pageCrawling(id);
-    }
 }

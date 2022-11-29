@@ -26,6 +26,15 @@ public class ItemDayConditionService {
 
     private final String dayCondition =
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
+
+    private final String KOSPIDayCondition =
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+    private final String KOSPI200DayCondition =
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+    private final String KOSDAQDayCondition =
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+
+
     public List<ItemDayCondition> getItemDayCondition(String itemCode){
         return itemDayConditionDao.getItemDayCondition(itemCode);
     }
@@ -37,38 +46,47 @@ public class ItemDayConditionService {
     public void process() throws IOException {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){
-            pageCrawling(itemCode.getItemCode());
+            String URL;
+            if(itemCode.getItemCode().equals("KOSPI"))
+                URL=KOSPIDayCondition;
+            else if(itemCode.getItemCode().equals("KOSPI2"))
+                URL = KOSPI200DayCondition;
+            else if(itemCode.getItemCode().equals("KOSDAQ"))
+                URL = KOSDAQDayCondition;
+            else URL=dayCondition;
+            System.out.println(itemCode.getItemCode());
+            pageCrawling(itemCode.getItemCode(),URL);
         }
     }
 
-    public void pageCrawling(String itemCode) throws IOException {
+    public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
         while(true){
             String num = Integer.toString(pageNum);
-            String URL = dayCondition + itemCode+"&page="+num;
+            String URL = url + itemCode+"&page="+num;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
                         num = Integer.toString(pageNum);
-                        String url = dayCondition + itemCode+"&page="+num;
-                        dayCrawling(url, itemCode);
+                        URL = url + itemCode+"&page="+num;
+                        if(dayCrawling(URL, itemCode)==false) return;
                     }
                     break;
                 }
                 for(; pageNum<= 10 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = dayCondition + itemCode+"&page="+num;
-                    dayCrawling(url, itemCode);
+                    URL = url + itemCode+"&page="+num;
+                    if(dayCrawling(URL, itemCode)==false) return;
                 }
             }
             else if(pages.size()<12) {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+pages.size()-2 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = dayCondition + itemCode+"&page="+num;
-                    dayCrawling(url, itemCode);
+                    URL = url + itemCode+"&page="+num;
+                    if(dayCrawling(URL, itemCode)==false) return;
                 }
                 break;
             }
@@ -76,21 +94,42 @@ public class ItemDayConditionService {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+ 9 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    String url = dayCondition + itemCode+"&page="+num;
-                    dayCrawling(url, itemCode);
+                    URL = url + itemCode+"&page="+num;
+                    if(dayCrawling(URL, itemCode)==false) return;
                 }
             }
         }
     }
 
-    public void dayCrawling(String URL, String itemCode) throws IOException {
+    public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
 
         List<ItemDayCondition> itemDayConditionList = getTimeData(document, itemCode);
-
-        for(ItemDayCondition dayCondition : itemDayConditionList){
-            itemDayConditionDao.insertItemDayCondition(dayCondition);
+        ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
+        if(checkNew==null){
+            String string = "2012-01-01";
+            LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
+            //System.out.println(recent);
+            for(ItemDayCondition dayCondition : itemDayConditionList){
+                if(date.isAfter(dayCondition.getPresent()))return false;
+                //System.out.println(dayCondition.getPresent());
+                itemDayConditionDao.insertItemDayCondition(dayCondition);
+            }
         }
+        else{
+            LocalDate recent = itemDayConditionDao.getLatestCondition(itemCode).getPresent();
+            String string = "2012-01-01";
+            LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
+            //System.out.println(recent);
+            for(ItemDayCondition dayCondition : itemDayConditionList){
+                if(recent!=null&&recent.equals(dayCondition.getPresent())) return false;
+                if(date.isAfter(dayCondition.getPresent()))return false;
+                //System.out.println(dayCondition.getPresent());
+                itemDayConditionDao.insertItemDayCondition(dayCondition);
+            }
+        }
+
+        return true;
     }
 
     private String convertPrice(String price){

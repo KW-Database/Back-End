@@ -16,5 +16,5 @@ public class User {
     private String phoneNumber;
     private char sex;
     private long cash;
-    private int adminAuth;
+    private String adminAuth;
 }
