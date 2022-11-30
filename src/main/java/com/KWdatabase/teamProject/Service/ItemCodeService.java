@@ -22,54 +22,60 @@ public class ItemCodeService {
 
     @Autowired
     private ItemCodeDao itemCodeDao;
+
+    private static final String stock_url_cospi =
+            "https://finance.naver.com/sise/sise_market_sum.naver?sosok=0";
+    private static final String stock_url_cosdaq =
+            "https://finance.naver.com/sise/sise_market_sum.naver?sosok=1";
+
     private static final String new_stock_url_cospi =
             "https://finance.naver.com/sise/sise_new_stock.naver?sosok=0";
 
     private static final String new_stock_url_cosdac =
             "https://finance.naver.com/sise/sise_new_stock.naver?sosok=1";
 
-    public void process(){
-        Connection conn1 = Jsoup.connect(new_stock_url_cospi);
-        Connection conn2 = Jsoup.connect(new_stock_url_cosdac);
 
-        Document document1 = null;
-        Document document2 = null;
-        try{
-            //document 객체 가져옴.
-            document1 =conn1.get();
-            document2 =conn2.get();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
 
-        System.out.println("코스피");
-        List<ItemCode> list1  =getDataList(document1);
+    public void process() throws IOException {
+        List<ItemCode> list1  =getDataList(new_stock_url_cospi);
         for(ItemCode l1 : list1){
             itemCodeDao.insertItemCode(l1);
         }
 
 
-        System.out.println("\n코스닥");
-        List<ItemCode> list2  =getDataList(document2);
+        List<ItemCode> list2  =getDataList(new_stock_url_cospi);
         for(ItemCode l2 : list2){
             itemCodeDao.insertItemCode(l2);
         }
+
+        pageCrawling(stock_url_cospi);
+        pageCrawling(stock_url_cosdaq);
     }
 
     @NonNull
-    private List<ItemCode> getDataList(Document document){
+    private List<ItemCode> getDataList(String URL) throws IOException {
+        Document document = Jsoup.connect(URL).get();
         List<ItemCode> list = new ArrayList<>();
         Elements selects = document.select(".type_2 tbody tr");
-
         for(Element select : selects){
             Elements tdContents = select.select("td");
             if(tdContents.size()<2) continue;
             //System.out.println(select.html() + tdContents.size());
             String date= tdContents.get(1).text();
             Elements aContents = tdContents.get(2).select("a");
-            Element aTag = aContents.get(0);
-            String itemName = aTag.text();
-            String itemURL = aTag.getElementsByAttribute("href").attr("href");
+            String itemName;
+            String itemURL;
+            if(aContents.size()==0){
+                aContents = tdContents.get(1).select("a");
+                Element aTag = aContents.get(0);
+                itemName = aTag.text();
+                itemURL = aTag.getElementsByAttribute("href").attr("href");
+            }
+            else{
+                Element aTag = aContents.get(0);
+                itemName = aTag.text();
+                itemURL = aTag.getElementsByAttribute("href").attr("href");
+            }
 
 
             StringTokenizer tokenizer = new StringTokenizer(itemURL, "/item/main.naver?code=");
@@ -85,4 +91,65 @@ public class ItemCodeService {
         return list;
     }
 
+    public void pageCrawling(String url) throws IOException {
+        int pageNum = 1;
+        int s=0;
+        while (true) {
+            s=0;
+            String num = Integer.toString(pageNum);
+            String URL = url + "&page=" + num;
+            Document document = Jsoup.connect(URL).get();
+            Elements pages = document.select(".Nnavi td");
+            if (pageNum == 1) {
+                if (pages.size() < 12) {
+                    for (; pageNum <= pages.size() - 2; pageNum++) {
+                        num = Integer.toString(pageNum);
+                        URL = url + "&page=" + num;
+                        List<ItemCode> list = getDataList(URL);
+                        for (ItemCode l : list) {
+                            itemCodeDao.insertItemCode(l);
+                        }
+                        if(list.size()<50){s=1;break;}
+                    }
+                    if(s==1)break;
+                    break;
+                }
+                for (; pageNum <= 10; pageNum++) {
+                    num = Integer.toString(pageNum);
+                    URL = url + "&page=" + num;
+                    List<ItemCode> list = getDataList(URL);
+                    for (ItemCode l : list) {
+                        itemCodeDao.insertItemCode(l);
+                    }
+                    if(list.size()<50){s=1;break;}
+                }
+                if(s==1)break;
+            } else if (pages.size() < 12) {
+                int pNum = pageNum;
+                for (; pageNum <= pNum + pages.size() - 2; pageNum++) {
+                    num = Integer.toString(pageNum);
+                    URL = url + "&page=" + num;
+                    List<ItemCode> list = getDataList(URL);
+                    for (ItemCode l : list) {
+                        itemCodeDao.insertItemCode(l);
+                    }
+                    if(list.size()<50){s=1;break;}
+                }
+                if(s==1)break;
+                break;
+            } else {
+                int pNum = pageNum;
+                for (; pageNum <= pNum + 9; pageNum++) {
+                    num = Integer.toString(pageNum);
+                    URL = url + "&page=" + num;
+                    List<ItemCode> list = getDataList(URL);
+                    for (ItemCode l : list) {
+                        itemCodeDao.insertItemCode(l);
+                    }
+                    if(list.size()<50){s=1;break;}
+                }
+                if(s==1)break;
+            }
+        }
+    }
 }

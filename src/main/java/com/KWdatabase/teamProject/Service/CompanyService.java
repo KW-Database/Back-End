@@ -1,7 +1,9 @@
 package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.Company;
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.dao.CompanyDao;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.StringTokenizer;
 
 @Service
@@ -24,6 +27,9 @@ public class CompanyService {
     @Autowired
     private CompanyDao companyDao;
 
+    @Autowired
+    private ItemCodeDao itemCodeDao;
+
     private static final String stockUrl =
             "https://finance.naver.com/item/main.naver?code=";
 
@@ -31,6 +37,13 @@ public class CompanyService {
             "https://navercomp.wisereport.co.kr/v2/company/c1010001.aspx?cmp_cd=";
     private static final String stockInfoUrl_page2 =
             "https://navercomp.wisereport.co.kr/v2/company/c1020001.aspx?cmp_cd=";
+
+    public void insertDataList() throws IOException {
+        List<ItemCode> itemCodeList= itemCodeDao.getItemCodeList();
+        for(ItemCode itemCode: itemCodeList){
+            process(itemCode.getItemCode());
+        }
+    }
 
 
     public void process(String itemCode) throws IOException {
@@ -59,16 +72,19 @@ public class CompanyService {
 
         System.out.println(itemCode);
         Elements info = document.select(".first table tbody tr ");
-        Elements Num = info.get(2).select("em");
+        Elements Num;
+        if(info.size()<3){
+            Num= info.get(1).select("em");
+        }
+        else{
+            Num= info.get(2).select("em");
+        }
         String itemNumText = Num.get(0).text();
         String itemNum ="";
         StringTokenizer tokenizer = new StringTokenizer(itemNumText, ",");
         while(tokenizer.hasMoreTokens()){
             itemNum = itemNum + tokenizer.nextToken();
         }
-
-        System.out.println("주식수");
-        System.out.println(itemNum);
 
         Document d1 = Jsoup.connect(stockInfoUrl_page1+itemCode).get();
 
@@ -77,15 +93,25 @@ public class CompanyService {
         for(Element contents : summary){
             companySummary = companySummary + contents.text();
         }
-        System.out.println("기업개요");
-        System.out.println(companySummary);
 
         Document d2 = Jsoup.connect(stockInfoUrl_page2+itemCode).get();
 
         Elements dates = d2.select("#cTB201 tbody tr td");
 
+        if(dates.isEmpty()){
+            String publicDate = "0001-01-01";
+            Company company = Company.builder()
+                    .itemCode(itemCode)
+                    .companyName(companyName)
+                    .itemNumber(Long.parseLong(itemNum))
+                    .publicDate(LocalDate.parse(publicDate,DateTimeFormatter.ISO_DATE))
+                    .companySummary(companySummary)
+                    .build();
+
+            return company;
+        }
+
         String publicDateText = dates.get(3).text();
-        System.out.println(publicDateText);
         String publicDate="";
 
         StringTokenizer tokenizer1 = new StringTokenizer(publicDateText, "설립일: ");
@@ -109,7 +135,7 @@ public class CompanyService {
         Company company = Company.builder()
                 .itemCode(itemCode)
                 .companyName(companyName)
-                .itemNumber(Integer.parseInt(itemNum))
+                .itemNumber(Long.parseLong(itemNum))
                 .publicDate(LocalDate.parse(publicDate,DateTimeFormatter.ISO_DATE))
                 .companySummary(companySummary)
                 .build();
