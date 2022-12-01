@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Company {
     private String itemCode;
     private String companyName;
-    private int itemNumber;
+    private long itemNumber;
     private String companySummary;
     private LocalDate publicDate;
 }

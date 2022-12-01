@@ -107,7 +107,9 @@ public class ItemDayConditionService {
         List<ItemDayCondition> itemDayConditionList = getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
-            String string = "2012-01-01";
+
+            String string = "2017-01-01";
+
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){
@@ -118,7 +120,9 @@ public class ItemDayConditionService {
         }
         else{
             LocalDate recent = itemDayConditionDao.getLatestCondition(itemCode).getPresent();
-            String string = "2012-01-01";
+
+            String string = "2017-01-01";
+
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){

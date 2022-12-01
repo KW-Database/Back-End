@@ -19,7 +19,7 @@ class UserDaoTest {
     @Test
     public void signUp_Test() throws Exception {
 
-        int adminAuth = 1;
+        String adminAuth = "1";
         int age = 24;
         String id = "Jiwon";
         String email="pg15320@gmail.com";

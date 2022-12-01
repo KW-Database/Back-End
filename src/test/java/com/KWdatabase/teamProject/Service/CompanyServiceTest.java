@@ -23,6 +23,6 @@ class CompanyServiceTest {
 
     @Test
     public void insertDataTest() throws Exception{
-        companyService.process("148930");
+        companyService.insertDataList();
     }
 }
