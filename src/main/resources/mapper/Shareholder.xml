@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.KWdatabase.teamProject.dao.ShareholderDao">
+    <select id="getShareholderList" resultType="com.KWdatabase.teamProject.Model.Shareholder">
+        SELECT * FROM shareholder WHERE item_code = #{itemCode}
+    </select>
+
+    <insert id="insertShareholderData">
+        insert ignore into shareholder(item_code,major_holders,item_number, shares)
+        values(#{sh.itemCode},#{sh.majorHolders},#{sh.itemNumber},#{sh.shares})
+    </insert>
+
+    <update id="updateShareholderData">
+        update shareholder set major_holders = #{ch.majorHolders}, item_number=#{ch.itemNumber},shares=#{ch.shares} where item_code = #{sh.itemCode} and major_holders=#{sh.majorHolders}
+    </update>
+</mapper>
