@@ -21,7 +21,7 @@ class UserDaoTest {
 
         String adminAuth = "1";
         int age = 24;
-        String id = "Jiwon";
+        String id = "kiki";
         String email="pg15320@gmail.com";
         String phoneNumber="01012341234";
         String pw="1234";

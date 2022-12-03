@@ -5,8 +5,12 @@
         SELECT * FROM chat
     </select>
 
+    <select id="getChat" resultType="com.KWdatabase.teamProject.Model.Chat">
+        select * from chat where item_code = #{chatDto}
+    </select>
+
     <insert id="insertChat">
         INSERT INTO chat(id,contents, post_time, item_code)
-        VALUES (#{chatDto.ID}, #{chatDto.contents}, #{chatDto.post_time},#{chatDto.iCode})
+        VALUES (#{chatDto.id}, #{chatDto.contents}, #{chatDto.postTime},#{chatDto.itemCode})
     </insert>
 </mapper>
