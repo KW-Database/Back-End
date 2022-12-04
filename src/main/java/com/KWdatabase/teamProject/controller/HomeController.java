@@ -30,6 +30,7 @@ public class HomeController {
         rank.put("volumeRank",homeService.getVolumeRank());
         rank.put("upRank",homeService.getUpRank());
         rank.put("downRank",homeService.getDownRank());
+        
         List<ItemDayCondition> itemDayConditionList_KOSPI = itemDayConditionService.getItemDayCondition("KOSPI");
         List<ItemDayCondition> itemDayConditionList_KOSPI200 = itemDayConditionService.getItemDayCondition("KOSPI200");
         List<ItemDayCondition> itemDayConditionList_KOSDAQ = itemDayConditionService.getItemDayCondition("KOSDAQ");
@@ -45,6 +46,7 @@ public class HomeController {
         rank.put("timesise_KOSPI", itemTimeConditionList_KOSPI);
         rank.put("timesise_KOSPI200", itemTimeConditionList_KOSPI200);
         rank.put("timesise_KOSDAQ", itemTimeConditionList_KOSDAQ);
+        rank.put("publicList",homeService.getPublicDateList());
 
         return ResponseEntity.ok().body(rank);
     }
