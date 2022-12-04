@@ -114,7 +114,7 @@ public class ItemTimeConditionService {
         ItemTimeCondition checkNew = itemTimeConditionDao.getNewCondition(itemCode);
         if(checkNew==null){
             List<ItemTimeCondition> itemTimeConditionList;
-            if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+            if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
                 itemTimeConditionList= getTimeData_k(document, itemCode);
             else itemTimeConditionList= getTimeData(document, itemCode);
 
@@ -125,7 +125,7 @@ public class ItemTimeConditionService {
         }
         else{
             List<ItemTimeCondition> itemTimeConditionList;
-            if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+            if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
                 itemTimeConditionList= getTimeData_k(document, itemCode);
             else itemTimeConditionList= getTimeData(document, itemCode);
             LocalTime recent= itemTimeConditionDao.getNewCondition(itemCode).getClosingTime();
@@ -185,6 +185,7 @@ public class ItemTimeConditionService {
             Elements tds = row.select("td");
             if(tds.size()<2) continue;
             String time = tds.get(0).text();
+            if(time.isEmpty())break;
             String execution_price = tds.get(1).text();
             String volume = tds.get(5).text();
 

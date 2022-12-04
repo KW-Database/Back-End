@@ -29,7 +29,7 @@ public class ItemDayConditionService {
 
     private final String KOSPIDayCondition =
             "https://finance.naver.com/sise/sise_index_day.naver?code=";
-    private final String KOSPI200DayCondition =
+    private final String KPI200DayCondition =
             "https://finance.naver.com/sise/sise_index_day.naver?code=";
     private final String KOSDAQDayCondition =
             "https://finance.naver.com/sise/sise_index_day.naver?code=";
@@ -49,8 +49,8 @@ public class ItemDayConditionService {
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPIDayCondition;
-            else if(itemCode.getItemCode().equals("KOSPI200"))
-                URL = KOSPI200DayCondition;
+            else if(itemCode.getItemCode().equals("KPI200"))
+                URL = KPI200DayCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQDayCondition;
             else URL=dayCondition;
@@ -106,7 +106,7 @@ public class ItemDayConditionService {
 
 
         List<ItemDayCondition> itemDayConditionList;
-        if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+        if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
             itemDayConditionList= getTimeData_k(document, itemCode);
         else itemDayConditionList= getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
