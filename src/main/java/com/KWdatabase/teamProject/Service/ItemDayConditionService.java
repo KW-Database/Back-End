@@ -47,15 +47,14 @@ public class ItemDayConditionService {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){
             String URL;
-            if(itemCode.getItemCode().equals("KOSPI"))
-                URL=KOSPIDayCondition;
-            else if(itemCode.getItemCode().equals("KOSPI2"))
-                URL = KOSPI200DayCondition;
-            else if(itemCode.getItemCode().equals("KOSDAQ"))
-                URL = KOSDAQDayCondition;
-            else URL=dayCondition;
-            System.out.println(itemCode.getItemCode());
-            pageCrawling(itemCode.getItemCode(),URL);
+            if(itemCode.getItemCode().equals("KOSPI")) {
+                URL = KOSPIDayCondition;
+
+
+
+                System.out.println(itemCode.getItemCode());
+                pageCrawling(itemCode.getItemCode(), URL);
+            }
         }
     }
 
@@ -66,6 +65,8 @@ public class ItemDayConditionService {
             String URL = url + itemCode+"&page="+num;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
+            System.out.println(num);
+
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
@@ -104,7 +105,10 @@ public class ItemDayConditionService {
     public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
 
-        List<ItemDayCondition> itemDayConditionList = getTimeData(document, itemCode);
+        List<ItemDayCondition> itemDayConditionList;
+        if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+            itemDayConditionList= getTimeData_k(document, itemCode);
+        else itemDayConditionList= getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
             String string = "2017-01-01";
@@ -172,6 +176,41 @@ public class ItemDayConditionService {
                     .startPrice(Integer.parseInt(start_price))
                     .highestPrice(Integer.parseInt(highest_price))
                     .lowestPrice(Integer.parseInt(lowest_price))
+                    .volume(Integer.parseInt(volume))
+                    .build();
+
+            itemDayConditionList.add(itemDayCondition);
+        }
+        return itemDayConditionList;
+    }
+
+    private List<ItemDayCondition> getTimeData_k(Document document, String itemcode){
+        System.out.println(itemcode);
+        List<ItemDayCondition> itemDayConditionList = new ArrayList<>();
+        Elements rows = document.select(".type_1 tbody tr");
+
+        for(Element row : rows){
+            Elements tds = row.select("td");
+            if(tds.size()<2) continue;
+            String date = tds.get(0).text();
+            String end_price = tds.get(1).text();
+
+            String volume = tds.get(5).text();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            LocalDate localDate = LocalDate.parse(date, formatter);
+
+            end_price = convertPrice(end_price);
+
+            volume = convertPrice(volume);
+
+            ItemDayCondition itemDayCondition = ItemDayCondition.builder()
+                    .itemCode(itemcode)
+                    .present(localDate)
+                    .endPrice(Float.parseFloat(end_price))
+                    .startPrice(0)
+                    .highestPrice(0)
+                    .lowestPrice(0)
                     .volume(Integer.parseInt(volume))
                     .build();
 

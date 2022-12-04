@@ -113,14 +113,21 @@ public class ItemTimeConditionService {
 
         ItemTimeCondition checkNew = itemTimeConditionDao.getNewCondition(itemCode);
         if(checkNew==null){
-            List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
+            List<ItemTimeCondition> itemTimeConditionList;
+            if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+                itemTimeConditionList= getTimeData_k(document, itemCode);
+            else itemTimeConditionList= getTimeData(document, itemCode);
+
             for(ItemTimeCondition timeCondition : itemTimeConditionList){
                 //System.out.println(timeCondition.getClosingTime());
                 itemTimeConditionDao.insertItemTimeCondition(timeCondition);
             }
         }
         else{
-            List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
+            List<ItemTimeCondition> itemTimeConditionList;
+            if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
+                itemTimeConditionList= getTimeData_k(document, itemCode);
+            else itemTimeConditionList= getTimeData(document, itemCode);
             LocalTime recent= itemTimeConditionDao.getNewCondition(itemCode).getClosingTime();
             for(ItemTimeCondition timeCondition : itemTimeConditionList){
                 if(recent!=null && recent.equals(timeCondition.getClosingTime()))return false;
@@ -162,6 +169,34 @@ public class ItemTimeConditionService {
                     .itemCode(itemcode)
                     .closingTime(localTime)
                     .executionPrice(Integer.parseInt(execution_price))
+                    .volume(Integer.parseInt(volume))
+                    .build();
+
+            itemTimeConditionList.add(itemTimeCondition);
+        }
+        return itemTimeConditionList;
+    }
+
+    private List<ItemTimeCondition> getTimeData_k(Document document, String itemcode){
+        List<ItemTimeCondition> itemTimeConditionList = new ArrayList<>();
+        Elements rows = document.select(".type_1 tbody tr");
+
+        for(Element row : rows){
+            Elements tds = row.select("td");
+            if(tds.size()<2) continue;
+            String time = tds.get(0).text();
+            String execution_price = tds.get(1).text();
+            String volume = tds.get(5).text();
+
+            LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
+
+            execution_price = convertPrice(execution_price);
+            volume = convertPrice(volume);
+
+            ItemTimeCondition itemTimeCondition = ItemTimeCondition.builder()
+                    .itemCode(itemcode)
+                    .closingTime(localTime)
+                    .executionPrice(Float.parseFloat(execution_price))
                     .volume(Integer.parseInt(volume))
                     .build();
 
