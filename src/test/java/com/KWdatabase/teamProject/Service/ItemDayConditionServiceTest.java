@@ -19,7 +19,7 @@ class ItemDayConditionServiceTest {
 
     @Test
     public void getDataTest(){
-        String itemcode = "001800";
+        String itemcode = "KOSPI";
         List<ItemDayCondition> itemDayConditionList=itemDayConditionService.getItemDayCondition(itemcode);
         for(ItemDayCondition i : itemDayConditionList){
             System.out.println(i.getPresent());
