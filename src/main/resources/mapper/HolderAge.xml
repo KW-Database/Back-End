@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.KWdatabase.teamProject.dao.HolderAgeDao">
+    <select id="getHolderAgeList" resultType="com.KWdatabase.teamProject.Model.HolderAge">
+        select * from holder_age where item_code = #{itemCode}
+    </select>
+
+    <select id="getHolderAgeByAges" resultType="com.KWdatabase.teamProject.Model.HolderAge">
+        select * from holder_age where item_code = #{itemCode} and ages = #{ages}
+    </select>
+
+    <insert id="insertHolderAge">
+        INSERT INTO holder_age(item_code,ages,item_number)
+        VALUES (#{holder.itemCode},#{holder.ages},#{holder.itemNumber})
+    </insert>
+
+    <update id="updateHolderAge">
+        update holder_age
+        set item_number = #{holder.itemNumber}
+        where item_code = #{holder.itemCode} and ages = #{holder.ages}
+    </update>
+
+
+
+
+</mapper>
