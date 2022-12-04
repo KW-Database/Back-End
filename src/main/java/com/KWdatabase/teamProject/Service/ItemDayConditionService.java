@@ -47,14 +47,15 @@ public class ItemDayConditionService {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){
             String URL;
-            if(itemCode.getItemCode().equals("KOSPI")) {
-                URL = KOSPIDayCondition;
-
-
-
-                System.out.println(itemCode.getItemCode());
-                pageCrawling(itemCode.getItemCode(), URL);
-            }
+            if(itemCode.getItemCode().equals("KOSPI"))
+                URL=KOSPIDayCondition;
+            else if(itemCode.getItemCode().equals("KOSPI200"))
+                URL = KOSPI200DayCondition;
+            else if(itemCode.getItemCode().equals("KOSDAQ"))
+                URL = KOSDAQDayCondition;
+            else URL=dayCondition;
+            System.out.println(itemCode.getItemCode());
+            pageCrawling(itemCode.getItemCode(),URL);
         }
     }
 
@@ -65,8 +66,6 @@ public class ItemDayConditionService {
             String URL = url + itemCode+"&page="+num;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
-            System.out.println(num);
-
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
@@ -104,6 +103,7 @@ public class ItemDayConditionService {
 
     public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
+
 
         List<ItemDayCondition> itemDayConditionList;
         if(itemCode.equals("KOSPI")||itemCode.equals("KOSPI200")||itemCode.equals("KOSDAQ"))
@@ -185,7 +185,6 @@ public class ItemDayConditionService {
     }
 
     private List<ItemDayCondition> getTimeData_k(Document document, String itemcode){
-        System.out.println(itemcode);
         List<ItemDayCondition> itemDayConditionList = new ArrayList<>();
         Elements rows = document.select(".type_1 tbody tr");
 
