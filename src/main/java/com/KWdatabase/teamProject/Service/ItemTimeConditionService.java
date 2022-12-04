@@ -57,7 +57,7 @@ public class ItemTimeConditionService {
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPITimeCondition;
-            else if(itemCode.getItemCode().equals("KOSPI2"))
+            else if(itemCode.getItemCode().equals("KOSPI200"))
                 URL = KOSPI200TimeCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQTimeCondition;
