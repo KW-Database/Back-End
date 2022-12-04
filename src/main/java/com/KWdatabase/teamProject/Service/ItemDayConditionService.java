@@ -28,11 +28,11 @@ public class ItemDayConditionService {
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
 
     private final String KOSPIDayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSPI";
     private final String KOSPI200DayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSPI200";
     private final String KOSDAQDayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSDAQ";
 
 
     public List<ItemDayCondition> getItemDayCondition(String itemCode){

@@ -26,6 +26,8 @@ public class HomeController {
         rank.put("upRank",homeService.getUpRank());
         rank.put("downRank",homeService.getDownRank());
         rank.put("publicList",homeService.getPublicDateList());
+        rank.put("goldenCross",homeService.getGoldenCross());
+        rank.put("deadCross",homeService.getDeadCross());
         return ResponseEntity.ok().body(rank);
     }
 }
