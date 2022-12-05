@@ -4,6 +4,14 @@
     <select id="getCompany" resultType="com.KWdatabase.teamProject.Model.Company">
         SELECT * FROM company_info WHERE item_code = #{com.itemCode}
     </select>
+
+    <select id="getCompanyList" resultType="com.KWdatabase.teamProject.Model.Company">
+        SELECT * FROM company_info
+    </select>
+
+    <delete id="deleteCompany">
+        delete from company_info where item_code = #{itemCode};
+    </delete>
     
     <select id="getPublicDateList" resultType="com.KWdatabase.teamProject.Model.PublicDateRankDto">
         select i.item_name, t.execution_price , t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate, c.public_date
