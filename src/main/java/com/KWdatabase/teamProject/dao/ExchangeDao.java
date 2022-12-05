@@ -9,5 +9,6 @@ public interface ExchangeDao {
     public void buy(String itemCode, String id, float price, long itemNumber);
     public void insertHoldings(@Param("h") Holdings holdings);
     public void sell(String itemCode, String id, float price, long itemNumber);
+    public void allSell(String itemCode, String id, float price, long itemNumber);
     public boolean isExistHolding(String id, String itemCode);
 }
