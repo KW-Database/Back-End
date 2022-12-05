@@ -38,6 +38,7 @@ public class LikedItemListService {
             float changeRate = changeAmount/endPrice * 100;
 
             LikedItemsResponseDto likedItemsResponseDto = LikedItemsResponseDto.builder()
+                    .itemCode(itemCode)
                     .changeAmount(changeAmount)
                     .changeRate(changeRate)
                     .itemName(itemName)
