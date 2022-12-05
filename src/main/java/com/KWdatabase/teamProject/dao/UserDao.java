@@ -15,4 +15,6 @@ public interface UserDao {
     public void updateUser(@Param("user") User user);
     public void deleteUser(String id);
     public int findAge(String id);
+    public User findID(String name, String email, String phone);
+    public User findPW(String ID, String name, String email, String phone);
 }

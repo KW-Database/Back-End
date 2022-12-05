@@ -38,6 +38,11 @@ public class CompanyService {
     private static final String stockInfoUrl_page2 =
             "https://navercomp.wisereport.co.kr/v2/company/c1020001.aspx?cmp_cd=";
 
+    public void insertData(Company company){
+        System.out.println(company.getItemCode());
+        companyDao.insertCompany(company);
+    }
+
     public void insertDataList() throws IOException {
         List<ItemCode> itemCodeList= itemCodeDao.getItemCodeList();
         for(ItemCode itemCode: itemCodeList){

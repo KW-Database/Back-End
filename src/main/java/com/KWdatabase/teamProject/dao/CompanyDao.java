@@ -17,4 +17,8 @@ public interface CompanyDao {
 
     public List<PublicDateRankDto> getPublicDateList();
 
+    public List<Company> getCompanyList();
+
+    public void deleteCompany(String itemCode);
+
 }
