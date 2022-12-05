@@ -9,6 +9,10 @@
         select * from item_code
     </select>
 
+    <select id="getItemCodeListByName" resultType="com.KWdatabase.teamProject.Model.ItemCode">
+        select * from item_code where item_name like concat("%",#{itemName},"%")
+    </select>
+
     <insert id="insertItemCode">
         INSERT ignore INTO item_code(item_code,item_name,like_number)
         VALUES (#{item.itemCode},#{item.itemName},#{item.likeNumber})
