@@ -5,6 +5,10 @@
         select * from user_info
     </select>
 
+    <select id="findAge" resultType="int">
+        select age from user_info where id = #{id}
+    </select>
+
     <select id="findUser" resultType="com.KWdatabase.teamProject.Model.User">
         SELECT * FROM user_info WHERE id = #{id}
     </select>
