@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.KWdatabase.teamProject.dao.CompanyDao">
     <select id="getCompany" resultType="com.KWdatabase.teamProject.Model.Company">
-        SELECT * FROM company_info WHERE item_code = #{com.itemCode}
+        SELECT * FROM company_info WHERE item_code = #{itemCode}
     </select>
 
     <select id="getCompanyList" resultType="com.KWdatabase.teamProject.Model.Company">
