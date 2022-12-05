@@ -28,11 +28,11 @@ public class ItemDayConditionService {
             "https://finance.naver.com/item/sise_day.naver?code=";// 예시 : https://finance.naver.com/item/sise_day.naver?code=001800
 
     private final String KOSPIDayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSPI";
-    private final String KOSPI200DayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSPI200";
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
+    private final String KPI200DayCondition =
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
     private final String KOSDAQDayCondition =
-            "https://finance.naver.com/sise/sise_index_day.naver?code=KOSDAQ";
+            "https://finance.naver.com/sise/sise_index_day.naver?code=";
 
 
     public List<ItemDayCondition> getItemDayCondition(String itemCode){
@@ -49,8 +49,8 @@ public class ItemDayConditionService {
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPIDayCondition;
-            else if(itemCode.getItemCode().equals("KOSPI2"))
-                URL = KOSPI200DayCondition;
+            else if(itemCode.getItemCode().equals("KPI200"))
+                URL = KPI200DayCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQDayCondition;
             else URL=dayCondition;
@@ -104,7 +104,11 @@ public class ItemDayConditionService {
     public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
 
-        List<ItemDayCondition> itemDayConditionList = getTimeData(document, itemCode);
+
+        List<ItemDayCondition> itemDayConditionList;
+        if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
+            itemDayConditionList= getTimeData_k(document, itemCode);
+        else itemDayConditionList= getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
             String string = "2017-01-01";
@@ -173,6 +177,40 @@ public class ItemDayConditionService {
                     .startPrice(Integer.parseInt(start_price))
                     .highestPrice(Integer.parseInt(highest_price))
                     .lowestPrice(Integer.parseInt(lowest_price))
+                    .volume(Integer.parseInt(volume))
+                    .build();
+
+            itemDayConditionList.add(itemDayCondition);
+        }
+        return itemDayConditionList;
+    }
+
+    private List<ItemDayCondition> getTimeData_k(Document document, String itemcode){
+        List<ItemDayCondition> itemDayConditionList = new ArrayList<>();
+        Elements rows = document.select(".type_1 tbody tr");
+
+        for(Element row : rows){
+            Elements tds = row.select("td");
+            if(tds.size()<2) continue;
+            String date = tds.get(0).text();
+            String end_price = tds.get(1).text();
+
+            String volume = tds.get(5).text();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            LocalDate localDate = LocalDate.parse(date, formatter);
+
+            end_price = convertPrice(end_price);
+
+            volume = convertPrice(volume);
+
+            ItemDayCondition itemDayCondition = ItemDayCondition.builder()
+                    .itemCode(itemcode)
+                    .present(localDate)
+                    .endPrice(Float.parseFloat(end_price))
+                    .startPrice(0)
+                    .highestPrice(0)
+                    .lowestPrice(0)
                     .volume(Integer.parseInt(volume))
                     .build();
 
