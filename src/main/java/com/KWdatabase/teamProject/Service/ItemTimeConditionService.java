@@ -27,11 +27,11 @@ public class ItemTimeConditionService {
             "https://finance.naver.com/item/sise_time.naver?code=";// 예시 : https://finance.naver.com/item/sise_time.naver?code=001800&thistime=20221116161103
 
     private final String KOSPITimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI";
     private final String KOSPI200TimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI200";
     private final String KOSDAQTimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSDAQ";
 
 
     @Autowired
