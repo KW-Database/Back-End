@@ -88,4 +88,22 @@ public class HolderAgeService {
             System.out.println(h.getItemCode()+ " : " + h.getAges());
         }
     }
+
+    public void reduceData(HolderAge holderAge){
+        List<HolderAge> holderAgeList = holderAgeDao.getHolderAgeList(holderAge.getItemCode());
+
+        int age = holderAge.getAges();
+        age = age- age%10;
+
+        HolderAge holderAge1 = holderAgeDao.getHolderAgeByAges(holderAge.getItemCode(), age);
+
+        HolderAge holderAge2 = HolderAge.builder()
+                .itemCode(holderAge.getItemCode())
+                .itemNumber(holderAge1.getItemNumber()-holderAge.getItemNumber())
+                .ages(age)
+                .build();
+
+        holderAgeDao.updateHolderAge(holderAge2);
+    }
+
 }
