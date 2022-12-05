@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface LikedItemDao {
     public List<LikedItemListDto> getList(String id);
+    public void deleteLikedItem(String id, String itemCode);
 }

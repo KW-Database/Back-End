@@ -21,6 +21,10 @@ public class LikedItemListService {
     private final ItemTimeConditionDao itemTimeConditionDao;
     private final ItemDayConditionDao itemDayConditionDao;
 
+    public Boolean deleteLikedItem(String id, String itemCode){
+        likedItemDao.deleteLikedItem(id, itemCode);
+        return true;
+    }
     public List<LikedItemsResponseDto> getListInfo(String id){
         List<LikedItemListDto> list = likedItemDao.getList(id);
         List<LikedItemsResponseDto> responseDtoList = new ArrayList<>();

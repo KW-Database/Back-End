@@ -7,4 +7,8 @@
             join item_code as b on a.item_code = b.item_code
         where a.id = #{id}
     </select>
+    <delete id="deleteLikedItem">
+        DELETE FROM liked_items
+        WHERE id = #{id} AND item_code = #{itemCode}
+    </delete>
 </mapper>
