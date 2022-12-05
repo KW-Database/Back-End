@@ -33,10 +33,11 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<HttpStatus> signUp(@RequestBody User user){
-        return userDao.signUp(user);
+        userDao.signUp(user);
+        return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
-    @GetMapping("/signup/newId")
+    @GetMapping("/signup/DupId")
     public ResponseEntity<HttpStatus> checkDupID(@RequestParam String id){
         if(userService.findUser(id)==null) return ResponseEntity.ok().body(HttpStatus.OK);
         else return null;
@@ -45,16 +46,20 @@ public class UserController {
     @GetMapping("/findID")//이름 전화번호 이메일
     public ResponseEntity<String> findId(@RequestParam String username,@RequestParam String email,@RequestParam String phone_number){
 
+        User user = userDao.findID(username,email,phone_number);
+        if(user==null) return null;
 //        String t = userService.findID(json);
 //        System.out.println(t);
-        return ResponseEntity.ok().body(userDao.findID(username,email,phone_number).getId());
+        return ResponseEntity.ok().body(user.getId());
     }
 
     //비밀번호찾기
     //ID 이름 전화번호 이메일
     @GetMapping("/findPW")//이름 전화번호 이메일
     public ResponseEntity<String> findPW(@RequestParam String id,@RequestParam String username,@RequestParam String email,@RequestParam String phone_number){
-        return ResponseEntity.ok().body(userDao.findPW(id,username,email,phone_number).getPw());
+        User user = userDao.findPW(id,username,email,phone_number);
+        if(user==null) return null;
+        return ResponseEntity.ok().body(user.getPw());
     }
 
 }
