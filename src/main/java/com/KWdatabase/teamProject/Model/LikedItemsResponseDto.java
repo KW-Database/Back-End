@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Builder
 public class LikedItemsResponseDto {
+    private String itemCode;
     private String itemName;
     private float price;
     private float changeAmount;
