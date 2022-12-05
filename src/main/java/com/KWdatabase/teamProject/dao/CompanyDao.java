@@ -10,11 +10,15 @@ import java.util.List;
 @Mapper
 public interface CompanyDao {
 
-    public Company getCompany(@Param("com") Company company);
+    public Company getCompany(String itemCode);
     void insertCompany(@Param("com")Company company);
 
     void updateCompany(@Param("com")Company company);
 
     public List<PublicDateRankDto> getPublicDateList();
+
+    public List<Company> getCompanyList();
+
+    public void deleteCompany(String itemCode);
 
 }

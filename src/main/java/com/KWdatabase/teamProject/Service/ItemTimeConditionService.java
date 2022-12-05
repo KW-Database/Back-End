@@ -27,11 +27,11 @@ public class ItemTimeConditionService {
             "https://finance.naver.com/item/sise_time.naver?code=";// 예시 : https://finance.naver.com/item/sise_time.naver?code=001800&thistime=20221116161103
 
     private final String KOSPITimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI";
     private final String KOSPI200TimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI200";
     private final String KOSDAQTimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSDAQ";
 
 
     @Autowired
@@ -57,7 +57,7 @@ public class ItemTimeConditionService {
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPITimeCondition;
-            else if(itemCode.getItemCode().equals("KOSPI2"))
+            else if(itemCode.getItemCode().equals("KOSPI200"))
                 URL = KOSPI200TimeCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQTimeCondition;
@@ -67,7 +67,8 @@ public class ItemTimeConditionService {
     }
     public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
-        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        //String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String now = "20221202091018";
         while(true){
             String num = Integer.toString(pageNum);
             String URL = url + itemCode+"&page="+num+"&thistime="+now;
@@ -113,14 +114,21 @@ public class ItemTimeConditionService {
 
         ItemTimeCondition checkNew = itemTimeConditionDao.getNewCondition(itemCode);
         if(checkNew==null){
-            List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
+            List<ItemTimeCondition> itemTimeConditionList;
+            if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
+                itemTimeConditionList= getTimeData_k(document, itemCode);
+            else itemTimeConditionList= getTimeData(document, itemCode);
+
             for(ItemTimeCondition timeCondition : itemTimeConditionList){
                 //System.out.println(timeCondition.getClosingTime());
                 itemTimeConditionDao.insertItemTimeCondition(timeCondition);
             }
         }
         else{
-            List<ItemTimeCondition> itemTimeConditionList = getTimeData(document, itemCode);
+            List<ItemTimeCondition> itemTimeConditionList;
+            if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
+                itemTimeConditionList= getTimeData_k(document, itemCode);
+            else itemTimeConditionList= getTimeData(document, itemCode);
             LocalTime recent= itemTimeConditionDao.getNewCondition(itemCode).getClosingTime();
             for(ItemTimeCondition timeCondition : itemTimeConditionList){
                 if(recent!=null && recent.equals(timeCondition.getClosingTime()))return false;
@@ -155,6 +163,7 @@ public class ItemTimeConditionService {
 
             LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
 
+
             execution_price = convertPrice(execution_price);
             volume = convertPrice(volume);
 
@@ -162,6 +171,35 @@ public class ItemTimeConditionService {
                     .itemCode(itemcode)
                     .closingTime(localTime)
                     .executionPrice(Integer.parseInt(execution_price))
+                    .volume(Integer.parseInt(volume))
+                    .build();
+
+            itemTimeConditionList.add(itemTimeCondition);
+        }
+        return itemTimeConditionList;
+    }
+
+    private List<ItemTimeCondition> getTimeData_k(Document document, String itemcode){
+        List<ItemTimeCondition> itemTimeConditionList = new ArrayList<>();
+        Elements rows = document.select(".type_1 tbody tr");
+
+        for(Element row : rows){
+            Elements tds = row.select("td");
+            if(tds.size()<2) continue;
+            String time = tds.get(0).text();
+            if(time.isEmpty())break;
+            String execution_price = tds.get(1).text();
+            String volume = tds.get(5).text();
+
+            LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
+
+            execution_price = convertPrice(execution_price);
+            volume = convertPrice(volume);
+
+            ItemTimeCondition itemTimeCondition = ItemTimeCondition.builder()
+                    .itemCode(itemcode)
+                    .closingTime(localTime)
+                    .executionPrice(Float.parseFloat(execution_price))
                     .volume(Integer.parseInt(volume))
                     .build();
 

@@ -4,15 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Builder
-public class LikedItemsResponseDto {
+public class MACD {
     private String itemCode;
     private String itemName;
-    private float price;
+    private int volume;
     private float changeAmount;
     private float changeRate;
-    private int likedNum;
-
+    private float executionPrice;
 }

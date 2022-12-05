@@ -24,7 +24,7 @@ class ItemTimeConditionServiceTest {
 
     @Test
     public void getDataTest(){
-        String itemcode = "001800";
+        String itemcode = "KOSPI";
         List<ItemTimeCondition> itemTimeConditionList=itemTimeConditionService.getItemTimeCondition(itemcode);
         for(ItemTimeCondition i : itemTimeConditionList){
             System.out.println(i.getClosingTime());

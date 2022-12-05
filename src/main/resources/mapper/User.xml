@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.KWdatabase.teamProject.dao.UserDao">
+    <select id="getUserList" resultType="com.KWdatabase.teamProject.Model.User">
+        select * from user_info
+    </select>
+
+    <select id="findAge" resultType="int">
+        select age from user_info where id = #{id}
+    </select>
+
     <select id="findUser" resultType="com.KWdatabase.teamProject.Model.User">
         SELECT * FROM user_info WHERE id = #{id}
+    </select>
+
+    <select id="findID" resultType="com.KWdatabase.teamProject.Model.User">
+        SELECT id FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone}
+    </select>
+
+    <select id="findPW" resultType="com.KWdatabase.teamProject.Model.User">
+        SELECT pw FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone} and id= #{id}
     </select>
 
     <insert id="signUp">

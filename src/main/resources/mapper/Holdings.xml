@@ -4,4 +4,8 @@
     <select id="getHoldings" resultType="com.KWdatabase.teamProject.Model.Holdings">
         select * from holdings where id = #{id}
     </select>
+
+    <select id="getHoldingNumber" resultType="int">
+        select item_number from holdings where id = #{id} and item_code=#{itemCode}
+    </select>
 </mapper>

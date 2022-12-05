@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.KWdatabase.teamProject.dao.ExchangeDao">
+    <update id="buy">
+        update user_info as u, holdings as h
+            set u.cash = u.cash - #{price} * #{itemNumber},
+                h.item_number = h.item_number + #{itemNumber},
+                h.avg_price = (h.avg_price*h.item_number + #{price} * #{itemNumber})/(h.item_number + #{itemNumber})
+        where h.id = u.id and u.id = #{id} and h.item_code = #{itemCode}
+    </update>
+
+    <update id="sell">
+        update user_info as u, holdings as h
+        set u.cash = u.cash + #{price} * #{itemNumber},
+            h.item_number = h.item_number - #{itemNumber},
+            h.avg_price = (h.avg_price*h.item_number - #{price} * #{itemNumber})/(h.item_number - #{itemNumber})
+        where h.id = u.id and u.id = #{id} and h.item_code = #{itemCode}
+    </update>
+
+    <update id="allSell">
+        update user_info as u, holdings as h
+        set u.cash = u.cash + #{price} * #{itemNumber},
+            h.item_number = 0,
+            h.avg_price = 0
+        where h.id = u.id and u.id = #{id} and h.item_code = #{itemCode}
+    </update>
+    <select id="isExistHolding" resultType="boolean">
+        select exists
+            (select 1
+            from holdings
+            where id = #{id} and item_code = #{itemCode} limit 1)
+    </select>
+
+    <insert id = "insertHoldings">
+        insert into holdings values(#{h.itemCode}, #{h.id}, #{h.itemNumber}, #{h.avgPrice})
+    </insert>
+</mapper>

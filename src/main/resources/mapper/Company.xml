@@ -2,14 +2,22 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.KWdatabase.teamProject.dao.CompanyDao">
     <select id="getCompany" resultType="com.KWdatabase.teamProject.Model.Company">
-        SELECT * FROM company_info WHERE item_code = #{com.itemCode}
+        SELECT * FROM company_info WHERE item_code = #{itemCode}
     </select>
+
+    <select id="getCompanyList" resultType="com.KWdatabase.teamProject.Model.Company">
+        SELECT * FROM company_info
+    </select>
+
+    <delete id="deleteCompany">
+        delete from company_info where item_code = #{itemCode};
+    </delete>
     
     <select id="getPublicDateList" resultType="com.KWdatabase.teamProject.Model.PublicDateRankDto">
         select i.item_name, t.execution_price , t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate, c.public_date
         from item_time_condition as t, item_code as i, item_day_condition as d, company_info as c
         where t.item_code = i.item_code and i.item_code = d.item_code  and d.item_code = c.item_code
-          and c.public_date between DATE_ADD(NOW(),INTERVAL -1 MONTH) and NOW()
+          and c.public_date between DATE_ADD(NOW(),INTERVAL -1 YEAR) and NOW()
           and (t.item_code, t.closing_time) in (
             select item_code, max(closing_time)
             from item_time_condition
@@ -18,7 +26,7 @@
             select item_code, max(present)
             from item_day_condition
             group by item_code)
-        order by change_rate desc LIMIT 10
+        order by public_date desc LIMIT 10
     </select>
 
     <insert id="insertCompany">

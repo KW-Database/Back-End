@@ -4,15 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Builder
-public class LikedItemsResponseDto {
+public class SellRequestDto {
+    private String id;
     private String itemCode;
-    private String itemName;
+    private long itemNumber;
     private float price;
-    private float changeAmount;
-    private float changeRate;
-    private int likedNum;
-
 }
