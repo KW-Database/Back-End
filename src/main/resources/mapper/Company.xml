@@ -18,7 +18,7 @@
             select item_code, max(present)
             from item_day_condition
             group by item_code)
-        order by change_rate desc LIMIT 10
+        order by public_date desc LIMIT 10
     </select>
 
     <insert id="insertCompany">

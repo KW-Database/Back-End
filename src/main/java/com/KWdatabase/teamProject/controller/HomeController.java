@@ -47,6 +47,8 @@ public class HomeController {
         rank.put("timesise_KOSPI200", itemTimeConditionList_KOSPI200);
         rank.put("timesise_KOSDAQ", itemTimeConditionList_KOSDAQ);
         rank.put("publicList",homeService.getPublicDateList());
+        rank.put("goldenCross",homeService.getGoldenCross());
+        rank.put("deadCross",homeService.getDeadCross());
 
         return ResponseEntity.ok().body(rank);
     }
