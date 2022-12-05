@@ -19,14 +19,14 @@ class UserDaoTest {
     @Test
     public void signUp_Test() throws Exception {
 
-        String adminAuth = "0";
-        int age = 34;
-        String id = "jiwon";
-        String email="pg@gmail.com";
-        String phoneNumber="01032341234";
-        String pw="3234";
-        char sex = 'W';
-        String username = "Jiwon";
+        String adminAuth = "1";
+        int age = 24;
+        String id = "kiki";
+        String email="pg15320@gmail.com";
+        String phoneNumber="01012341234";
+        String pw="1234";
+        char sex = 'M';
+        String username = "ParkJiwon";
 
         User user = User.builder()
                 .adminAuth(adminAuth)
