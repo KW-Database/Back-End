@@ -14,4 +14,5 @@ public interface UserDao {
     public void signUp(@Param("user") User user);
     public void updateUser(@Param("user") User user);
     public void deleteUser(String id);
+    public int findAge(String id);
 }
