@@ -26,21 +26,21 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String writeNewPost(@RequestBody Posts posts){
+    public ResponseEntity<HttpStatus> writeNewPost(@RequestBody Posts posts){
         postsDao.insertPost(posts);
         Posts posts1 = postsDao.getPost(posts.getPostId());
-        return "agora";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/{postId}/update")
-    public String updatePost(@PathVariable int postId, @RequestBody Posts posts){
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable int postId, @RequestBody Posts posts){
         postsDao.updatePost(posts);
-        return "good!";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{postId}/delete")
-    public String deletePost(@PathVariable int postId){
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable int postId){
         postsDao.deletePost(postId);
-        return "deleted";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
