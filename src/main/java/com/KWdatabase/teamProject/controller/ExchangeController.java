@@ -3,6 +3,7 @@ package com.KWdatabase.teamProject.controller;
 import com.KWdatabase.teamProject.Model.*;
 import com.KWdatabase.teamProject.Service.*;
 import com.KWdatabase.teamProject.dao.CompanyDao;
+import com.KWdatabase.teamProject.dao.HoldingsDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class ExchangeController {
     private final ItemDayConditionService itemDayConditionService;
     private final HolderAgeService holderAgeService;
     private final MyWalletService myWalletService;
+    private final HoldingsDao holdingsDao;
     @PostMapping("/buy")
     public ResponseEntity<HttpStatus> buy(@RequestBody BuyRequestDto buyRequestDto){
         exchangeService.buy(buyRequestDto);
@@ -41,6 +43,9 @@ public class ExchangeController {
         map.put("holderAge", holderAgeList);
         MyWalletResponseDto myWalletResponseDto = myWalletService.getMyWallet(id);
         map.put("myWalletInfo", myWalletResponseDto);
+        List<Holdings> holdings = holdingsDao.getHoldings(id);
+        map.put("holdings", holdings);
+
         return ResponseEntity.ok().body(map);
     }
 
