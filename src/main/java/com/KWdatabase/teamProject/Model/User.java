@@ -28,10 +28,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auth = new ArrayList<>();
-        auth.add(new SimpleGrantedAuthority(adminAuth));
-
-        return auth;
+        Collection<GrantedAuthority> collection = new ArrayList<>();
+        collection.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return adminAuth;
+            }
+        });
+        return collection;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return id;
     }
 
     @Override
@@ -61,7 +65,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        // 우리 사이트에서 1년동안 회원이 로그인을 안하면 휴면계정으로 하기로 했다면
         return true;
     }
 }

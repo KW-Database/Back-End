@@ -46,6 +46,7 @@ public class ItemDayConditionService {
     public void process() throws IOException {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){
+            System.out.println(itemCode.getItemCode());
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPIDayCondition;
@@ -104,14 +105,14 @@ public class ItemDayConditionService {
     public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
 
-
+        System.out.println(itemCode);
         List<ItemDayCondition> itemDayConditionList;
         if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
             itemDayConditionList= getTimeData_k(document, itemCode);
         else itemDayConditionList= getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
-            String string = "2017-01-01";
+            String string = "2022-11-01";
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){
@@ -123,7 +124,7 @@ public class ItemDayConditionService {
         else{
             LocalDate recent = itemDayConditionDao.getLatestCondition(itemCode).getPresent();
 
-            String string = "2017-01-01";
+            String string = "2022-11-01";
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){
