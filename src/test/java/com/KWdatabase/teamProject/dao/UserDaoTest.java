@@ -23,8 +23,6 @@ class UserDaoTest {
     @Test
     public void signUp_Test() throws Exception {
 
-
-
         String adminAuth = "USER";
         int age = 24;
         String id = "gwon";
@@ -33,6 +31,7 @@ class UserDaoTest {
         String pw="1234";
         char sex = 'M';
         String username = "ParkJiwon";
+
 
 
         User user = User.builder()
