@@ -27,14 +27,19 @@ public class ExchangeController {
     private final ChatService chatService;
     @PostMapping("/buy")
     public ResponseEntity<HttpStatus> buy(@RequestBody BuyRequestDto buyRequestDto){
-        exchangeService.buy(buyRequestDto);
+        if(exchangeService.buy(buyRequestDto) == false) return null;
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Map<String,Object>> info(@RequestBody Map<String, Object> json ){
-        String itemCode = json.get("itemCode").toString();
-        String id = json.get("id").toString();
+    @PostMapping("/sell")
+    public ResponseEntity<HttpStatus> sell(@RequestBody SellRequestDto sellRequestDto) {
+        if (exchangeService.sell(sellRequestDto) == false) return null;
+        return ResponseEntity.ok().body(HttpStatus.OK);
+    }
+    @PostMapping
+    public ResponseEntity<Map<String,Object>> info(@RequestBody ExchangeDto exchangeDto){
+        String itemCode = exchangeDto.getItemCode();
+        String id = exchangeDto.getId();
 
         Company company= companyDao.getCompany(itemCode);
         Map<String,Object> map = new HashMap<>();
