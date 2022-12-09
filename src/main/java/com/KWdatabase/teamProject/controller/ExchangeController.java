@@ -4,6 +4,7 @@ import com.KWdatabase.teamProject.Model.*;
 import com.KWdatabase.teamProject.Service.*;
 import com.KWdatabase.teamProject.dao.CompanyDao;
 import com.KWdatabase.teamProject.dao.HoldingsDao;
+import com.KWdatabase.teamProject.dao.ItemTimeConditionDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class ExchangeController {
     private final MyWalletService myWalletService;
     private final HoldingsDao holdingsDao;
     private final ChatService chatService;
+    private final ItemTimeConditionService itemTimeConditionService;
     @PostMapping("/buy")
     public ResponseEntity<HttpStatus> buy(@RequestBody BuyRequestDto buyRequestDto){
         if(exchangeService.buy(buyRequestDto) == false) return null;
@@ -37,9 +39,7 @@ public class ExchangeController {
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Map<String,Object>> info(@RequestBody ExchangeDto exchangeDto){
-        String itemCode = exchangeDto.getItemCode();
-        String id = exchangeDto.getId();
+    public ResponseEntity<Map<String,Object>> info(@RequestParam("id") String id, @RequestParam("itemCode") String itemCode){
 
         Company company= companyDao.getCompany(itemCode);
         Map<String,Object> map = new HashMap<>();
@@ -52,13 +52,15 @@ public class ExchangeController {
         map.put("myWalletInfo", myWalletResponseDto);
         List<Holdings> holdings = holdingsDao.getHoldings(id);
         map.put("holdings", holdings);
+        float curPrice = itemTimeConditionService.getCurPrice(itemCode);
+        map.put("curPrice", curPrice);
 
         return ResponseEntity.ok().body(map);
     }
 
     @GetMapping("/renewChat")
-    public ResponseEntity<List<Chat>> renewChat(@RequestBody Map<String,Object> json){
-        String itemCode= json.get("itemCode").toString();
+    public ResponseEntity<List<Chat>> renewChat(@RequestParam String itemCode){
+        //String itemCode= json.get("itemCode").toString();
         List<Chat> chatList = chatService.getChatList(itemCode);
         return ResponseEntity.ok().body(chatList);
     }
