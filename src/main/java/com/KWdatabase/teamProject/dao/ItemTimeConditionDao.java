@@ -16,4 +16,5 @@ public interface ItemTimeConditionDao {
     public List<ItemInfoResponseDto>getVolumeRank();
     public List<ItemInfoResponseDto>getUpRank();
     public List<ItemInfoResponseDto>getDownRank();
+    public float getCurPrice(String itemCode);
 }
