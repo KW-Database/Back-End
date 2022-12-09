@@ -40,7 +40,8 @@ public class ExchangeController {
     public ResponseEntity<Map<String,Object>> info(@RequestBody ExchangeDto exchangeDto){
         String itemCode = exchangeDto.getItemCode();
         String id = exchangeDto.getId();
-
+        System.out.println(itemCode);
+        System.out.println(id);
         Company company= companyDao.getCompany(itemCode);
         Map<String,Object> map = new HashMap<>();
         map.put("companyInfo", company);
