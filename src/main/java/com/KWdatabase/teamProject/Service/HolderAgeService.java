@@ -25,7 +25,16 @@ public class HolderAgeService {
     private UserDao userDao;
 
     public List<HolderAge> getData(String itemCode){
-        return holderAgeDao.getHolderAgeList(itemCode);
+        List<HolderAge> list = holderAgeDao.getHolderAgeList(itemCode);
+        long age0 = list.get(0).getItemNumber();
+        long age10 = list.get(1).getItemNumber();
+        long age80 =list.get(8).getItemNumber();
+        long age90 = list.get(9).getItemNumber();
+        list.get(1).setItemNumber(age0+age10);
+        list.get(8).setItemNumber(age80+age90);
+        list.remove(9);
+        list.remove(0);
+        return list;
     }
 
     public void insert(HolderAge holderAge){
