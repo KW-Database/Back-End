@@ -66,16 +66,8 @@ public class ExchangeController {
     }
 
     @PostMapping("/chat")
-    public ResponseEntity<HttpStatus> chat(@RequestBody Map<String, Object> json){
-        String itemCode = json.get("itemCode").toString();
-        String id = json.get("id").toString();
-        String contents = json.get("contents").toString();
-        LocalDateTime postTime = LocalDateTime.now();
-        Chat chat = Chat.builder()
-                .contents(contents)
-                .itemCode(itemCode)
-                .id(id)
-                .postTime(postTime).build();
+    public ResponseEntity<HttpStatus> chat(@RequestBody Chat chat){
+        chat.setPostTime(LocalDateTime.now());
         chatService.insertChat(chat);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
