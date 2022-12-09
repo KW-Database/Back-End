@@ -36,9 +36,12 @@ public class ExchangeController {
     @PostMapping("/sell")
     public ResponseEntity<HttpStatus> sell(@RequestBody SellRequestDto sellRequestDto) {
         if (exchangeService.sell(sellRequestDto) == false) return null;
+        Holdings holdings = holdingsDao.findHolding(sellRequestDto.getId(),sellRequestDto.getItemCode());
+        System.out.println(holdings.getItemNumber());
+        if(holdings.getItemNumber()==0) holdingsDao.deleteHoldings(sellRequestDto.getId(),sellRequestDto.getItemCode());
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
-    @PostMapping
+    @GetMapping
     public ResponseEntity<Map<String,Object>> info(@RequestParam("id") String id, @RequestParam("itemCode") String itemCode){
 
         Company company= companyDao.getCompany(itemCode);
