@@ -53,7 +53,7 @@ public class ExchangeController {
         List<Holdings> holdings = holdingsDao.getHoldings(id);
         map.put("holdings", holdings);
         float curPrice = itemTimeConditionService.getCurPrice(itemCode);
-        map.put("curPirce", curPrice);
+        map.put("curPrice", curPrice);
 
         return ResponseEntity.ok().body(map);
     }
