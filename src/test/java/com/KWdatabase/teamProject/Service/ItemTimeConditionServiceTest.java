@@ -38,5 +38,12 @@ class ItemTimeConditionServiceTest {
         itemTimeConditionService.process();
     }
 
+    @Test
+    public void getCurPriceTest() throws Exception {
+        String itemCode = "000060";
+        float curPrice = itemTimeConditionService.getCurPrice(itemCode);
+        System.out.println(curPrice);
+    }
+
 
 }

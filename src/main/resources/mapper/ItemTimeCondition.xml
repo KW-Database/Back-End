@@ -52,6 +52,13 @@
         order by t.volume LIMIT 10
     </select>
 
+    <select id="getCurPrice" resultType="float">
+        select execution_price
+        from item_time_condition
+        where item_code ="000060"
+        order by closing_time desc limit 1
+    </select>
+
 
 
     <insert id="insertItemTimeCondition">
