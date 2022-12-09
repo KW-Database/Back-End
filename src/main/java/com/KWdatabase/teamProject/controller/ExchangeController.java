@@ -39,9 +39,7 @@ public class ExchangeController {
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Map<String,Object>> info(@RequestBody ExchangeDto exchangeDto){
-        String itemCode = exchangeDto.getItemCode();
-        String id = exchangeDto.getId();
+    public ResponseEntity<Map<String,Object>> info(@RequestParam("id") String id, @RequestParam("itemCode") String itemCode){
 
         Company company= companyDao.getCompany(itemCode);
         Map<String,Object> map = new HashMap<>();
@@ -55,6 +53,7 @@ public class ExchangeController {
         List<Holdings> holdings = holdingsDao.getHoldings(id);
         map.put("holdings", holdings);
         float curPrice = itemTimeConditionService.getCurPrice(itemCode);
+        map.put("curPirce", curPrice);
 
         return ResponseEntity.ok().body(map);
     }
