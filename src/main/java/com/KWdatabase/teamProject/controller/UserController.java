@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +56,8 @@ public class UserController {
     }
     @PostMapping("/signup")
     public ResponseEntity<HttpStatus> signUp(@RequestBody User user){
+        String pw = user.getPw();
+        user.setPw(new BCryptPasswordEncoder().encode(pw));
         userDao.signUp(user);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
@@ -83,4 +87,8 @@ public class UserController {
         return ResponseEntity.ok().body(pw);
     }
 
+    @GetMapping("/username")
+    public String getMyInfo(@AuthenticationPrincipal User principal){
+        return principal.toString();
+    }
 }
