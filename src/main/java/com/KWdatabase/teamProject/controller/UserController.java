@@ -70,9 +70,9 @@ public class UserController {
     }
 
     @GetMapping("/findID")//이름 전화번호 이메일
-    public ResponseEntity<String> findId(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number){
+    public ResponseEntity<String> findId(@RequestParam String nickname, @RequestParam String email, @RequestParam String phone_number){
 
-        String id = userDao.findID(username, email, phone_number);
+        String id = userDao.findID(nickname, email, phone_number);
         if(id==null) return null;
 //        String t = userService.findID(json);
 //        System.out.println(t);
@@ -82,8 +82,8 @@ public class UserController {
     //비밀번호찾기
     //ID 이름 전화번호 이메일
     @GetMapping("/findPW")//이름 전화번호 이메일
-    public ResponseEntity<String> findPW(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number, @RequestParam String id){
-        String pw = userDao.findPW(id, username, email, phone_number);
+    public ResponseEntity<String> findPW(@RequestParam String nickname, @RequestParam String email, @RequestParam String phone_number, @RequestParam String id){
+        String pw = userDao.findPW(id, nickname, email, phone_number);
         if(pw==null) return null;
         return ResponseEntity.ok().body(pw);
     }
