@@ -14,21 +14,21 @@
     </select>
 
     <select id="findID" resultType="String">
-        SELECT id FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone}
+        SELECT id FROM user_info WHERE nickname =#{name} and email = #{email} and phone_number =#{phone}
     </select>
 
     <select id="findPW" resultType="String">
-        SELECT pw FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone} and id= #{id}
+        SELECT pw FROM user_info WHERE nickname =#{name} and email = #{email} and phone_number =#{phone} and id= #{id}
     </select>
 
     <insert id="signUp">
-        INSERT INTO user_info(id,pw,username,age,email,phone_number,sex,admin_auth)
-        VALUES (#{user.id},#{user.pw},#{user.username},#{user.age},#{user.email},#{user.phoneNumber},#{user.sex},#{user.adminAuth})
+        INSERT INTO user_info(id,pw,nickname,age,email,phone_number,sex,admin_auth)
+        VALUES (#{user.id},#{user.pw},#{user.nickname},#{user.age},#{user.email},#{user.phoneNumber},#{user.sex},#{user.adminAuth})
     </insert>
 
     <update id="updateUser">
         UPDATE user_info
-        SET pw = #{user.pw}, username = #{user.username}, age = #{user.age}, email=#{user.email}, phone_number = #{user.phoneNumber}, sex= #{user.sex}, admin_auth = #{user.adminAuth}
+        SET pw = #{user.pw}, nickname = #{user.nickname}, age = #{user.age}, email=#{user.email}, phone_number = #{user.phoneNumber}, sex= #{user.sex}, admin_auth = #{user.adminAuth}
         WHERE id = #{user.id}
     </update>
 
