@@ -11,7 +11,7 @@ public interface PostsDao {
     public Posts getPost(int postId);
     void insertPost(@Param("post")Posts posts);
     void updatePost(@Param("post")Posts posts);
-
+    void increaseHitCount(int postId);
     void deletePost(int postId);
 
     List<Posts> getPostsList();

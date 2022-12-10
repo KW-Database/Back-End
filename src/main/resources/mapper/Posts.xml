@@ -10,8 +10,8 @@
     </select>
 
     <insert id="insertPost">
-        INSERT INTO posts(post_id, id, title, contents, post_time, hit_count)
-        VALUES (#{post.postId}, #{post.id},#{post.title},#{post.contents},#{post.postTime},#{post.hitCount})
+        INSERT INTO posts(id, title, contents, post_time, hit_count)
+        VALUES (#{post.id},#{post.title},#{post.contents},#{post.postTime},#{post.hitCount})
     </insert>
 
     <update id="updatePost">
