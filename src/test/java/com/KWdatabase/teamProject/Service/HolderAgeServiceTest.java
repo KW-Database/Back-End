@@ -1,11 +1,14 @@
 package com.KWdatabase.teamProject.Service;
 
 import com.KWdatabase.teamProject.Model.HolderAge;
+import com.KWdatabase.teamProject.Model.Holdings;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,5 +36,13 @@ class HolderAgeServiceTest {
                 .ages(73)
                 .build();
         holderAgeService.updateData(holderAge);
+    }
+
+    @Test
+    public void getData(){
+        List<HolderAge> list = holderAgeService.getData("000060");
+        for(HolderAge h : list){
+            System.out.println(h.getAges()+ " "+ h.getItemNumber());
+        }
     }
 }

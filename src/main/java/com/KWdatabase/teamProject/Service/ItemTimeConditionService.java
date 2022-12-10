@@ -44,6 +44,10 @@ public class ItemTimeConditionService {
         return itemTimeConditionDao.getItemTimeCondition(itemCode);
     }
 
+    public float getCurPrice(String itemCode){
+        return itemTimeConditionDao.getCurPrice(itemCode);
+    }
+
     public void deleteAllData(){
         itemTimeConditionDao.deleteAllTimeSise();
     }
