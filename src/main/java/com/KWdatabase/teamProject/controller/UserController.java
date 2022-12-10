@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Map;
 import java.util.Objects;
 
@@ -87,8 +88,4 @@ public class UserController {
         return ResponseEntity.ok().body(pw);
     }
 
-    @GetMapping("/username")
-    public String getMyInfo(@AuthenticationPrincipal User principal){
-        return principal.toString();
-    }
 }

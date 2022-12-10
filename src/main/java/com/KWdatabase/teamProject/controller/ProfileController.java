@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/profile")
@@ -30,5 +32,11 @@ public class ProfileController {
     public ResponseEntity<HttpStatus> deleteUser(@RequestParam(name="id")String id){
         userService.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/username")
+    @ResponseBody
+    public String getMyInfo(Principal principal){
+        return principal.getName();
     }
 }
