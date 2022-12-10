@@ -36,8 +36,7 @@ public class ProfileController {
 
     @GetMapping("/username")
     @ResponseBody
-    public String currentUserName(Principal principal)
-    {
+    public String getMyInfo(Principal principal){
         return principal.getName();
     }
 }

@@ -1,22 +1,18 @@
 package com.KWdatabase.teamProject.controller;
 
 import com.KWdatabase.teamProject.Model.User;
+import com.KWdatabase.teamProject.Model.NewPwDto;
 import com.KWdatabase.teamProject.Service.UserService;
 import com.KWdatabase.teamProject.dao.UserDao;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +32,15 @@ public class UserController {
 //        User user = userService.findUser(id);
 //        if(user==null||user.getPw().equals((String)json.get("pw"))) return null;
 //    }
+    @GetMapping("/loginFail")
+    public void loginFail(){
+        String redirectURL = "http://localhost:3000/login";
+        try{
+            response.sendRedirect(redirectURL);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @GetMapping("/login")
     public void loginSuccess(){
         String redirectURL = "http://localhost:3000";
@@ -70,9 +75,9 @@ public class UserController {
     }
 
     @GetMapping("/findID")//이름 전화번호 이메일
-    public ResponseEntity<String> findId(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number){
+    public ResponseEntity<String> findId(@RequestParam String nickname, @RequestParam String email, @RequestParam String phone_number){
 
-        String id = userDao.findID(username, email, phone_number);
+        String id = userDao.findID(nickname, email, phone_number);
         if(id==null) return null;
 //        String t = userService.findID(json);
 //        System.out.println(t);
@@ -82,10 +87,18 @@ public class UserController {
     //비밀번호찾기
     //ID 이름 전화번호 이메일
     @GetMapping("/findPW")//이름 전화번호 이메일
-    public ResponseEntity<String> findPW(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number, @RequestParam String id){
-        String pw = userDao.findPW(id, username, email, phone_number);
+    public ResponseEntity<String> findPW(@RequestParam String nickname, @RequestParam String email, @RequestParam String phone_number, @RequestParam String id){
+        String pw = userDao.findPW(id, nickname, email, phone_number);
         if(pw==null) return null;
         return ResponseEntity.ok().body(pw);
+    }
+
+    @PostMapping("/changePW")//이름 전화번호 이메일
+    public ResponseEntity<HttpStatus> changePW(@RequestBody NewPwDto newPwDto){
+        User user = userDao.findUser(newPwDto.id);
+        user.setPw(newPwDto.pw);
+        userDao.updateUser(user);
+        return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
 }

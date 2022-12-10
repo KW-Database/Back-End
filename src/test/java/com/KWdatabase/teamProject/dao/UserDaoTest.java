@@ -30,14 +30,14 @@ class UserDaoTest {
     @Test
     public void signUp_Test() throws Exception {
 
-        String adminAuth = "USER";
+        String adminAuth = "0";
         int age = 24;
-        String id = "gwon";
-        String email="pg20@gmail.com";
-        String phoneNumber="01012323534";
+        String id = "gwondd";
+        String email="pg2022@gmail.com";
+        String phoneNumber="01010023534";
         String pw="1234";
         char sex = 'M';
-        String username = "ParkJiwon";
+        String nickname = "Parkwon";
 
 
 
@@ -49,7 +49,7 @@ class UserDaoTest {
                 .phoneNumber(phoneNumber)
                 .pw(new BCryptPasswordEncoder().encode(pw))
                 .sex(sex)
-                .username(username)
+                .nickname(nickname)
                 .build();
 
         userDao.signUp(user);
