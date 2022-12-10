@@ -25,7 +25,6 @@ public class HomeController {
     private final HomeService homeService;
     private final ItemDayConditionService itemDayConditionService;
     private final ItemTimeConditionService itemTimeConditionService;
-
     private final SearchItemService searchItemService;
     @GetMapping("/search")
     public ResponseEntity<List<SearchItem>> searchItems(@RequestParam String name){
@@ -34,8 +33,8 @@ public class HomeController {
     }
 
     //Test Method
-    @GetMapping("/test/rank")
-    public ResponseEntity<Map<String,Object>> rankTest(){
+    @GetMapping("/home")
+    public ResponseEntity<Map<String,Object>> home(){
         Map<String,Object> rank = new HashMap<>();
         rank.put("volumeRank",homeService.getVolumeRank());
         rank.put("upRank",homeService.getUpRank());

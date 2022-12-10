@@ -23,6 +23,13 @@ public class LikedItemListService {
 
     public Boolean deleteLikedItem(String id, String itemCode){
         likedItemDao.deleteLikedItem(id, itemCode);
+        likedItemDao.decreaseLikedItem(itemCode);
+        return true;
+    }
+
+    public Boolean insertLikedItem(String id , String itemCode){
+        likedItemDao.insertLikedItem(id,itemCode);
+        likedItemDao.increaseLikedItem(itemCode);
         return true;
     }
     public List<LikedItemsResponseDto> getListInfo(String id){
