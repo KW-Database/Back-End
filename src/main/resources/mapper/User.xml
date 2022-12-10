@@ -13,11 +13,11 @@
         SELECT * FROM user_info WHERE id = #{id}
     </select>
 
-    <select id="findID" resultType="com.KWdatabase.teamProject.Model.User">
+    <select id="findID" resultType="String">
         SELECT id FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone}
     </select>
 
-    <select id="findPW" resultType="com.KWdatabase.teamProject.Model.User">
+    <select id="findPW" resultType="String">
         SELECT pw FROM user_info WHERE username =#{name} and email = #{email} and phone_number =#{phone} and id= #{id}
     </select>
 

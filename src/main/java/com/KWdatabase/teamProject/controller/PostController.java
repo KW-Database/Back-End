@@ -36,7 +36,6 @@ public class PostController {
     @PostMapping("/write")
     public ResponseEntity<HttpStatus> writeNewPost(@RequestBody Posts posts){
         postsDao.insertPost(posts);
-        Posts posts1 = postsDao.getPost(posts.getPostId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

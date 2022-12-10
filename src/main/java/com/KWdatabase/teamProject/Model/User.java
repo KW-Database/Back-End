@@ -29,11 +29,8 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
+        collection.add(() -> {
                 return adminAuth;
-            }
         });
         return collection;
     }

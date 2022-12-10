@@ -15,7 +15,7 @@
     </insert>
 
     <update id="updatePost">
-        update posts set title = #{post.title} , contents = #{post.contents} where post_id =#{post.postId} and id =#{post.id}
+        update posts set title = #{post.title} , contents = #{post.contents}, hit_count = #{post.hitCount} where post_id =#{post.postId} and id =#{post.id}
     </update>
 
     <delete id="deletePost">

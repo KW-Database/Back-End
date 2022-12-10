@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,6 +24,7 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
+    private final HttpServletResponse response;
 
 //
 //    @GetMapping("/login")
@@ -30,7 +33,25 @@ public class UserController {
 //        User user = userService.findUser(id);
 //        if(user==null||user.getPw().equals((String)json.get("pw"))) return null;
 //    }
+    @GetMapping("/login")
+    public void loginSuccess(){
+        String redirectURL = "http://localhost:3000";
+        try{
+            response.sendRedirect(redirectURL);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    @GetMapping("/logout")
+    public void logoutSuccess(){
+        String redirectURL = "http://localhost:3000/login";
+        try{
+            response.sendRedirect(redirectURL);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @PostMapping("/signup")
     public ResponseEntity<HttpStatus> signUp(@RequestBody User user){
         userDao.signUp(user);
@@ -44,22 +65,22 @@ public class UserController {
     }
 
     @GetMapping("/findID")//이름 전화번호 이메일
-    public ResponseEntity<String> findId(@RequestParam String username,@RequestParam String email,@RequestParam String phone_number){
+    public ResponseEntity<String> findId(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number){
 
-        User user = userDao.findID(username,email,phone_number);
-        if(user==null) return null;
+        String id = userDao.findID(username, email, phone_number);
+        if(id==null) return null;
 //        String t = userService.findID(json);
 //        System.out.println(t);
-        return ResponseEntity.ok().body(user.getId());
+        return ResponseEntity.ok().body(id);
     }
 
     //비밀번호찾기
     //ID 이름 전화번호 이메일
     @GetMapping("/findPW")//이름 전화번호 이메일
-    public ResponseEntity<String> findPW(@RequestParam String id,@RequestParam String username,@RequestParam String email,@RequestParam String phone_number){
-        User user = userDao.findPW(id,username,email,phone_number);
-        if(user==null) return null;
-        return ResponseEntity.ok().body(user.getPw());
+    public ResponseEntity<String> findPW(@RequestParam String username, @RequestParam String email, @RequestParam String phone_number, @RequestParam String id){
+        String pw = userDao.findPW(id, username, email, phone_number);
+        if(pw==null) return null;
+        return ResponseEntity.ok().body(pw);
     }
 
 }
