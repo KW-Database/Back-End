@@ -9,4 +9,8 @@ import java.util.List;
 public interface LikedItemDao {
     public List<LikedItemListDto> getList(String id);
     public void deleteLikedItem(String id, String itemCode);
+    public void insertLikedItem(String id, String itemCode);
+    public void decreaseLikedItem(String itemCode);
+    public void increaseLikedItem(String itemCode);
+
 }

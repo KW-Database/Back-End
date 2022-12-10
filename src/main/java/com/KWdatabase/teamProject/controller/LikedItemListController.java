@@ -27,4 +27,12 @@ public class LikedItemListController {
         List<LikedItemsResponseDto> list =likedItemListService.getListInfo(id);
         return ResponseEntity.ok().body(list);
     }
+
+    @PostMapping("/user/likedItem")
+    public ResponseEntity<List<LikedItemsResponseDto>> insertLikedItems(@RequestParam("id") String id, @RequestParam("itemCode") String itemCode){
+        likedItemListService.insertLikedItem(id, itemCode);
+        List<LikedItemsResponseDto> list =likedItemListService.getListInfo(id);
+        return ResponseEntity.ok().body(list);
+    }
+
 }
