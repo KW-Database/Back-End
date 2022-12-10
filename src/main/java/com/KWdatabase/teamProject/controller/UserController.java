@@ -36,6 +36,15 @@ public class UserController {
 //        User user = userService.findUser(id);
 //        if(user==null||user.getPw().equals((String)json.get("pw"))) return null;
 //    }
+    @GetMapping("/loginFail")
+    public void loginFail(){
+        String redirectURL = "http://localhost:3000/login";
+        try{
+            response.sendRedirect(redirectURL);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @GetMapping("/login")
     public void loginSuccess(){
         String redirectURL = "http://localhost:3000";
