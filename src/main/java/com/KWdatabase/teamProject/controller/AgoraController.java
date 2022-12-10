@@ -20,6 +20,7 @@ public class AgoraController {
     @GetMapping("/agora")
     public ResponseEntity<List<Posts>> viewPosts(){
         List<Posts> list = postsDao.getPostsList();
+
         return ResponseEntity.ok().body(list);
     }
 }
