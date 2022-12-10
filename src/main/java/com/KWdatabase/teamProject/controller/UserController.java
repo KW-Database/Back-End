@@ -88,10 +88,4 @@ public class UserController {
         return ResponseEntity.ok().body(pw);
     }
 
-    @GetMapping("/username")
-    @ResponseBody
-    public String currentUserName(Principal principal)
-    {
-        return principal.getName();
-    }
 }
