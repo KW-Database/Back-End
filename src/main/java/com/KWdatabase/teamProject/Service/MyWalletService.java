@@ -53,7 +53,8 @@ public class MyWalletService {
         }
         long cash = userDao.findUser(id).getCash();
         totalHoldings = totalAppraisal + cash;
-        totalRate = (totalAppraisal - totalPurchase) / (float)totalPurchase * 100;
+        if(totalPurchase==0)totalRate=0;
+        else totalRate = (totalAppraisal - totalPurchase) / (float)totalPurchase * 100;
 
         myWalletResponseDto = MyWalletResponseDto.builder()
                 .cash(cash)

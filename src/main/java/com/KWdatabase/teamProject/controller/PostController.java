@@ -25,10 +25,17 @@ public class PostController {
         return ResponseEntity.ok().body(posts);
     }
 
+    @PostMapping("/{postId}")
+    public ResponseEntity<HttpStatus> hitCount(@PathVariable int postId){
+        Posts posts = postsDao.getPost(postId);
+        posts.setHitCount(posts.getHitCount()+1);
+        postsDao.updatePost(posts);
+        return ResponseEntity.ok().body(HttpStatus.OK);
+    }
+
     @PostMapping("/write")
     public ResponseEntity<HttpStatus> writeNewPost(@RequestBody Posts posts){
         postsDao.insertPost(posts);
-        Posts posts1 = postsDao.getPost(posts.getPostId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

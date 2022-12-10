@@ -20,13 +20,20 @@ class UserDaoTest {
     @Autowired
     private UserDao userDao;
 
+
+    @Test
+    public void findUserTest() throws Exception{
+        User user = userDao.findUser("kiki");
+        System.out.println(user.getUsername());
+        System.out.println("Aaaaaa");
+    }
     @Test
     public void signUp_Test() throws Exception {
 
         String adminAuth = "USER";
         int age = 24;
         String id = "gwon";
-        String email="pg15320@gmail.com";
+        String email="pg20@gmail.com";
         String phoneNumber="01012323534";
         String pw="1234";
         char sex = 'M';

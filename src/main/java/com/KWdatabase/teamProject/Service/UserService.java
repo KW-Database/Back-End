@@ -3,6 +3,7 @@ package com.KWdatabase.teamProject.Service;
 import com.KWdatabase.teamProject.Model.User;
 import com.KWdatabase.teamProject.dao.UserDao;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +37,4 @@ public class UserService implements UserDetailsService {
         userDao.deleteUser(id);
         return true;
     }
-
-
 }
