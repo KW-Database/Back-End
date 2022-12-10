@@ -7,8 +7,23 @@
             join item_code as b on a.item_code = b.item_code
         where a.id = #{id}
     </select>
+    <insert id="insertLikedItem">
+        INSERT INTO liked_items(item_code,id)
+        VALUES (#{itemCode},#{id})
+    </insert>
     <delete id="deleteLikedItem">
         DELETE FROM liked_items
         WHERE id = #{id} AND item_code = #{itemCode}
     </delete>
+    <update id="decreaseLikedItem">
+        UPDATE item_code
+        SET like_number = like_number - 1
+        WHERE item_code = #{itemCode}
+    </update>
+    <update id="increaseLikedItem">
+        UPDATE item_code
+        SET like_number = like_number + 1
+        WHERE item_code = #{itemCode}
+    </update>
+
 </mapper>
