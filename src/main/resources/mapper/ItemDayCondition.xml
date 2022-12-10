@@ -12,28 +12,24 @@
     <select id="getMACDGoldenCross" resultType="com.KWdatabase.teamProject.Model.MACD">
         select  A.item_code,c.item_name, t.execution_price ,t.volume, t.execution_price-A.end_price as change_amount, ROUND((t.execution_price-A.end_price)/A.end_price*100,1) as change_rate
         from	item_time_condition as t, item_code as c,
-            (select item_code,end_price,
-                (AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 11 preceding AND CURRENT ROW) -
+                (select item_code,end_price,
+                        (AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 11 preceding AND CURRENT ROW) -
                 AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 25 preceding AND CURRENT ROW)) as macd
-            from item_day_condition
-            where (item_code,present) in
-                    (select item_code, max(present)
-                    from item_day_condition
-                    group by item_code)) A,
-            (select item_code,
-                (AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 11 preceding AND CURRENT ROW) -
+                 from item_day_condition
+                 where (item_code,present) in
+                       (select item_code, max(present)
+                        from item_day_condition
+                        group by item_code)) A,
+                (select item_code,
+                        (AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 11 preceding AND CURRENT ROW) -
                 AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 25 preceding AND CURRENT ROW)) as macd
-            from item_day_condition
-            where (item_code,present) in
-                (select item_code, max(present)
-                from item_day_condition
-                where (item_code,present) in
-                    (select item_code, max(present)
-                    from item_day_condition
-                    group by item_code)
-            group by item_code)) B
+                 from item_day_condition
+                 where (item_code,present) in
+                       (select item_code, max(present) - interval 1 DAY
+                 from item_day_condition
+                 group by item_code)) B
         where A.macd>0 and 0>B.macd and A.item_code = B.item_code and B.item_code = t.item_code and t.item_code = c.item_code and
-        (t.item_code, t.closing_time) in (
+            (t.item_code, t.closing_time) in (
             select item_code, max(closing_time)
             from item_time_condition
             group by item_code)
@@ -56,12 +52,8 @@
                 AVG(end_price)OVER(ORDER BY present ROWS BETWEEN 25 preceding AND CURRENT ROW)) as macd
             from item_day_condition
             where (item_code,present) in
-                (select item_code, max(present)
+                (select item_code, max(present) - interval 1 DAY
                 from item_day_condition
-                where (item_code,present) in
-                    (select item_code, max(present)
-                    from item_day_condition
-                    group by item_code)
                 group by item_code))B
         where 0 > A.macd and B.macd > 0 and A.item_code = B.item_code and B.item_code = t.item_code and t.item_code = c.item_code and
             (t.item_code, t.closing_time) in (
