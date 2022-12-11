@@ -1,10 +1,12 @@
 package com.KWdatabase.teamProject.controller;
 
 import com.KWdatabase.teamProject.Model.Company;
+import com.KWdatabase.teamProject.Model.ItemCode;
 import com.KWdatabase.teamProject.Model.User;
 import com.KWdatabase.teamProject.Service.CompanyService;
 import com.KWdatabase.teamProject.Service.UserService;
 import com.KWdatabase.teamProject.dao.CompanyDao;
+import com.KWdatabase.teamProject.dao.ItemCodeDao;
 import com.KWdatabase.teamProject.dao.UserDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class AdminController {
 
     @Autowired
     private CompanyDao companyDao;
+
+    private final ItemCodeDao itemCodeDao;
 
     @GetMapping("/user")
     public ResponseEntity<List<User>> getUserList(){
@@ -53,14 +57,13 @@ public class AdminController {
     }
     private CompanyService companyService;
     @PostMapping("/company")
-    public ResponseEntity<HttpStatus> createCompany(@RequestBody Map<String, Object> json){
-        Company company = Company.builder()
-                .itemCode((String) json.get("itemCode"))
-                .companyName((String) json.get("companyName"))
-                .companySummary((String) json.get("companySummary"))
-                .itemNumber(Long.parseLong((String) json.get("itemNumber")))
-                .publicDate(LocalDate.now()).build();
-        System.out.println(company.getPublicDate());
+    public ResponseEntity<HttpStatus> createCompany(@RequestBody Company company) {
+        ItemCode itemCode = ItemCode.builder()
+                .itemCode(company.getItemCode())
+                .itemName(company.getCompanyName())
+                .likeNumber(0)
+                .build();
+        itemCodeDao.insertItemCode(itemCode);
         companyDao.insertCompany(company);
         return ResponseEntity.ok(HttpStatus.OK);
     }

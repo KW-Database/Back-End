@@ -26,6 +26,19 @@ public class HolderAgeService {
 
     public List<HolderAge> getData(String itemCode){
         List<HolderAge> list = holderAgeDao.getHolderAgeList(itemCode);
+        if(list.isEmpty()){
+            for(int a =0; a<10; a++){
+                HolderAge holderAge1= HolderAge.builder()
+                        .ages(a*10)
+                        .itemCode(itemCode)
+                        .itemNumber(0)
+                        .build();
+                System.out.println(holderAge1.getItemNumber());
+                holderAgeDao.insertHolderAge(holderAge1);
+
+            }
+            list = holderAgeDao.getHolderAgeList(itemCode);
+        }
         long age0 = list.get(0).getItemNumber();
         long age10 = list.get(1).getItemNumber();
         long age80 =list.get(8).getItemNumber();
