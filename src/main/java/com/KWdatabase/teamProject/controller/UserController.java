@@ -36,7 +36,7 @@ public class UserController {
     
     @GetMapping("/loginFail")
     public void loginFail(){
-        String redirectURL = "http://localhost:3000/login";
+        String redirectURL = "http://localhost:3000/";
         try{
             response.sendRedirect(redirectURL);
         } catch (IOException e){
@@ -45,7 +45,7 @@ public class UserController {
     }
     @GetMapping("/login")
     public void loginSuccess(){
-        String redirectURL = "http://localhost:3000";
+        String redirectURL = "http://localhost:3000/home";
         try{
             response.sendRedirect(redirectURL);
         } catch (IOException e){
@@ -55,7 +55,7 @@ public class UserController {
 
     @GetMapping("/logout")
     public void logoutSuccess(){
-        String redirectURL = "http://localhost:3000/login";
+        String redirectURL = "http://localhost:3000/";
         try{
             response.sendRedirect(redirectURL);
         } catch (IOException e){

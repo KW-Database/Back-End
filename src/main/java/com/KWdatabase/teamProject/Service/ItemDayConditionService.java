@@ -46,7 +46,6 @@ public class ItemDayConditionService {
     public void process() throws IOException {
         List<ItemCode> itemCodeList = itemCodeDao.getItemCodeList();
         for(ItemCode itemCode : itemCodeList){
-            System.out.println(itemCode.getItemCode());
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPIDayCondition;
@@ -65,7 +64,7 @@ public class ItemDayConditionService {
 
     public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
-        while(true){
+        while(pageNum<=30){
             String num = Integer.toString(pageNum);
             String URL = url + itemCode+"&page="+num;
             Document document = Jsoup.connect(URL).get();
@@ -85,7 +84,7 @@ public class ItemDayConditionService {
                     if(dayCrawling(URL, itemCode)==false) return;
                 }
             }
-            else if(pages.size()<12) {
+            else if(pages.size()<=12) {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+pages.size()-2 ; pageNum++){
                     num = Integer.toString(pageNum);
@@ -107,12 +106,11 @@ public class ItemDayConditionService {
 
     public boolean dayCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
-
-        System.out.println(itemCode);
         List<ItemDayCondition> itemDayConditionList;
         if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
             itemDayConditionList= getTimeData_k(document, itemCode);
         else itemDayConditionList= getTimeData(document, itemCode);
+        if(itemDayConditionList.isEmpty())return false;
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
             String string = "2022-06-01";
@@ -154,11 +152,13 @@ public class ItemDayConditionService {
     private List<ItemDayCondition> getTimeData(Document document, String itemcode){
         List<ItemDayCondition> itemDayConditionList = new ArrayList<>();
         Elements rows = document.select(".type2 tbody tr");
-
+        String his = "";
         for(Element row : rows){
             Elements tds = row.select("td span");
             if(tds.size()<2) continue;
             String date = tds.get(0).text();
+            if(his.equals(date))break;
+            his= date;
             String end_price = tds.get(1).text();
             String start_price = tds.get(3).text();
             String highest_price = tds.get(4).text();
@@ -192,11 +192,13 @@ public class ItemDayConditionService {
     private List<ItemDayCondition> getTimeData_k(Document document, String itemcode){
         List<ItemDayCondition> itemDayConditionList = new ArrayList<>();
         Elements rows = document.select(".type_1 tbody tr");
-
+        String his="";
         for(Element row : rows){
             Elements tds = row.select("td");
             if(tds.size()<2) continue;
             String date = tds.get(0).text();
+            if(his.equals(date))break;
+            his= date;
             String end_price = tds.get(1).text();
 
             String volume = tds.get(5).text();
