@@ -72,8 +72,8 @@ public class ItemTimeConditionService {
     }
     public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
-        //String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String now = "20221202171418";
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        //String now = "20221202171418";
         while(true){
             String num = Integer.toString(pageNum);
             String URL = url + itemCode+"&page="+num+"&thistime="+now;
