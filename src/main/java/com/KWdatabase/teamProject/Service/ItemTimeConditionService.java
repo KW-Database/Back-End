@@ -27,11 +27,11 @@ public class ItemTimeConditionService {
             "https://finance.naver.com/item/sise_time.naver?code=";// 예시 : https://finance.naver.com/item/sise_time.naver?code=001800&thistime=20221116161103
 
     private final String KOSPITimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=";
     private final String KOSPI200TimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSPI200";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=";
     private final String KOSDAQTimeCondition =
-            "https://finance.naver.com/sise/sise_index_time.naver?code=KOSDAQ";
+            "https://finance.naver.com/sise/sise_index_time.naver?code=";
 
 
     @Autowired
@@ -72,13 +72,14 @@ public class ItemTimeConditionService {
     }
     public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
-        //String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String now = "20221202151418";
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        //String now = "20221202171418";
         while(true){
             String num = Integer.toString(pageNum);
             String URL = url + itemCode+"&page="+num+"&thistime="+now;
             Document document = Jsoup.connect(URL).get();
             Elements pages = document.select(".Nnavi td");
+            System.out.println(URL);
             if(pageNum==1){
                 if(pages.size()<12){
                     for(; pageNum<= pages.size()-2 ; pageNum++){
@@ -107,7 +108,7 @@ public class ItemTimeConditionService {
                 int pNum = pageNum;
                 for(; pageNum<= pNum+ 9 ; pageNum++){
                     num = Integer.toString(pageNum);
-                    URL = timeCondition + itemCode+"&page="+num+"&thistime="+now;
+                    URL = url + itemCode+"&page="+num+"&thistime="+now;
                     if(timeCrawling(URL, itemCode)==false)return;
                 }
             }
@@ -116,14 +117,13 @@ public class ItemTimeConditionService {
 
     public boolean timeCrawling(String URL, String itemCode) throws IOException {
         Document document=Jsoup.connect(URL).get();
-
+        System.out.println(URL);
         ItemTimeCondition checkNew = itemTimeConditionDao.getNewCondition(itemCode);
         if(checkNew==null){
             List<ItemTimeCondition> itemTimeConditionList;
             if(itemCode.equals("KOSPI")||itemCode.equals("KPI200")||itemCode.equals("KOSDAQ"))
                 itemTimeConditionList= getTimeData_k(document, itemCode);
             else itemTimeConditionList= getTimeData(document, itemCode);
-
             for(ItemTimeCondition timeCondition : itemTimeConditionList){
                 //System.out.println(timeCondition.getClosingTime());
                 itemTimeConditionDao.insertItemTimeCondition(timeCondition);
@@ -158,11 +158,13 @@ public class ItemTimeConditionService {
     private List<ItemTimeCondition> getTimeData(Document document, String itemcode){
         List<ItemTimeCondition> itemTimeConditionList = new ArrayList<>();
         Elements rows = document.select(".type2 tbody tr");
-
+        String his="";
         for(Element row : rows){
             Elements tds = row.select("td span");
             if(tds.size()<2) continue;
             String time = tds.get(0).text();
+            if(his.equals(time))break;
+            //System.out.println(his);
             String execution_price = tds.get(1).text();
             String volume = tds.get(5).text();
 
@@ -180,6 +182,7 @@ public class ItemTimeConditionService {
                     .build();
 
             itemTimeConditionList.add(itemTimeCondition);
+            if(time.equals("09:00:00")) break;
         }
         return itemTimeConditionList;
     }
