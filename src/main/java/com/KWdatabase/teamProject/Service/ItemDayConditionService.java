@@ -54,8 +54,11 @@ public class ItemDayConditionService {
                 URL = KPI200DayCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQDayCondition;
-            else URL=dayCondition;
-            System.out.println(itemCode.getItemCode());
+            else {
+                continue;
+                //URL=dayCondition;
+            }
+            //System.out.println(itemCode.getItemCode());
             pageCrawling(itemCode.getItemCode(),URL);
         }
     }
@@ -112,7 +115,7 @@ public class ItemDayConditionService {
         else itemDayConditionList= getTimeData(document, itemCode);
         ItemDayCondition checkNew = itemDayConditionDao.getLatestCondition(itemCode);
         if(checkNew==null){
-            String string = "2022-11-01";
+            String string = "2022-06-01";
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){
@@ -124,7 +127,7 @@ public class ItemDayConditionService {
         else{
             LocalDate recent = itemDayConditionDao.getLatestCondition(itemCode).getPresent();
 
-            String string = "2022-11-01";
+            String string = "2022-06-01";
             LocalDate date = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
             //System.out.println(recent);
             for(ItemDayCondition dayCondition : itemDayConditionList){

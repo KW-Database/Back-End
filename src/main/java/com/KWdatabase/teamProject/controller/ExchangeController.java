@@ -27,6 +27,8 @@ public class ExchangeController {
     private final HoldingsDao holdingsDao;
     private final ChatService chatService;
     private final ItemTimeConditionService itemTimeConditionService;
+
+    private final ShareholderService shareholderService;
     @PostMapping("/buy")
     public ResponseEntity<HttpStatus> buy(@RequestBody BuyRequestDto buyRequestDto){
         if(exchangeService.buy(buyRequestDto) == false) return null;
@@ -57,6 +59,8 @@ public class ExchangeController {
         map.put("holdings", holdings);
         float curPrice = itemTimeConditionService.getCurPrice(itemCode);
         map.put("curPrice", curPrice);
+        List<Shareholder> shareholderList = shareholderService.getShareholderList(itemCode);
+        map.put("shareHolder", shareholderList);
 
         return ResponseEntity.ok().body(map);
     }

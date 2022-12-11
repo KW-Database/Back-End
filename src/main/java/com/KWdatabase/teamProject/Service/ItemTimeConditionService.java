@@ -61,18 +61,19 @@ public class ItemTimeConditionService {
             String URL;
             if(itemCode.getItemCode().equals("KOSPI"))
                 URL=KOSPITimeCondition;
-            else if(itemCode.getItemCode().equals("KOSPI200"))
+            else if(itemCode.getItemCode().equals("KPI200"))
                 URL = KOSPI200TimeCondition;
             else if(itemCode.getItemCode().equals("KOSDAQ"))
                 URL = KOSDAQTimeCondition;
-            else URL=timeCondition;
+            else continue;
+                //URL=timeCondition;
             pageCrawling(itemCode.getItemCode(),URL);
         }
     }
     public void pageCrawling(String itemCode, String url) throws IOException {
         int pageNum =1;
         //String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        String now = "20221202091018";
+        String now = "20221202151418";
         while(true){
             String num = Integer.toString(pageNum);
             String URL = url + itemCode+"&page="+num+"&thistime="+now;

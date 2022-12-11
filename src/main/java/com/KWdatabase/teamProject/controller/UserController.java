@@ -97,8 +97,8 @@ public class UserController {
 
     @PostMapping("/changePW")//이름 전화번호 이메일
     public ResponseEntity<HttpStatus> changePW(@RequestBody NewPwDto newPwDto){
-        User user = userDao.findUser(newPwDto.id);
-        user.setPw(newPwDto.pw);
+        User user = userDao.findUser(newPwDto.getId());
+        user.setPw(new BCryptPasswordEncoder().encode(newPwDto.getPw()));
         userDao.updateUser(user);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }

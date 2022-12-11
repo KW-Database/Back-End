@@ -41,11 +41,11 @@ public class HomeController {
         rank.put("downRank",homeService.getDownRank());
         
         List<ItemDayCondition> itemDayConditionList_KOSPI = itemDayConditionService.getItemDayCondition("KOSPI");
-        List<ItemDayCondition> itemDayConditionList_KOSPI200 = itemDayConditionService.getItemDayCondition("KOSPI200");
+        List<ItemDayCondition> itemDayConditionList_KOSPI200 = itemDayConditionService.getItemDayCondition("KPI200");
         List<ItemDayCondition> itemDayConditionList_KOSDAQ = itemDayConditionService.getItemDayCondition("KOSDAQ");
 
         List<ItemTimeCondition> itemTimeConditionList_KOSPI = itemTimeConditionService.getItemTimeCondition("KOSPI");
-        List<ItemTimeCondition> itemTimeConditionList_KOSPI200 = itemTimeConditionService.getItemTimeCondition("KOSPI200");
+        List<ItemTimeCondition> itemTimeConditionList_KOSPI200 = itemTimeConditionService.getItemTimeCondition("KPI200");
         List<ItemTimeCondition> itemTimeConditionList_KOSDAQ = itemTimeConditionService.getItemTimeCondition("KOSDAQ");
 
         rank.put("daysise_KOSPI",itemDayConditionList_KOSPI);
