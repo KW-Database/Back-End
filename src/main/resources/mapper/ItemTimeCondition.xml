@@ -11,7 +11,7 @@
 
 
     <select id="getVolumeRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
-        select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        select c.item_code, c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
             select item_code, max(closing_time)
@@ -25,7 +25,7 @@
     </select>
 
     <select id="getUpRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
-        select c.item_name, t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        select c.item_code,c.item_name, t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
             select item_code, max(closing_time)
@@ -39,7 +39,7 @@
     </select>
 
     <select id="getDownRank" resultType="com.KWdatabase.teamProject.Model.ItemInfoResponseDto">
-        select c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
+        select c.item_code,c.item_name,t.execution_price ,t.volume, t.execution_price-d.end_price as change_amount, ROUND((t.execution_price-d.end_price)/d.end_price*100,1) as change_rate
         from item_time_condition as t, item_code as c, item_day_condition as d
         where t.item_code = c.item_code and c.item_code = d.item_code  and (t.item_code, t.closing_time) in (
             select item_code, max(closing_time)

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Setter
 public class PublicDateRankDto {
 
+    private String itemCode;
     private String itemName;
     private float executionPrice;
     private float changeAmount;
