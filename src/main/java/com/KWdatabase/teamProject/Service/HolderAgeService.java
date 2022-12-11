@@ -37,7 +37,7 @@ public class HolderAgeService {
                 holderAgeDao.insertHolderAge(holderAge1);
 
             }
-
+            list = holderAgeDao.getHolderAgeList(itemCode);
         }
         long age0 = list.get(0).getItemNumber();
         long age10 = list.get(1).getItemNumber();
