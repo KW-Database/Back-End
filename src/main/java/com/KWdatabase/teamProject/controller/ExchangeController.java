@@ -60,7 +60,7 @@ public class ExchangeController {
         float curPrice = itemTimeConditionService.getCurPrice(itemCode);
         map.put("curPrice", curPrice);
         List<Shareholder> shareholderList = shareholderService.getShareholderList(itemCode);
-        map.put("shareHolder", shareholderList);
+        map.put("primeHolder", shareholderList);
 
         return ResponseEntity.ok().body(map);
     }
